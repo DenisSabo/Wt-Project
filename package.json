@@ -1,0 +1,42 @@
+{
+  "name": "webgallery-app",
+  "version": "1.0.0",
+  "description": "The webgallery is a webapplication, where user can upload their own images and view images of other users.",
+  "main": "server.js",
+  "directories": {
+    "public": "./public",
+    "css": "./public/css",
+    "assets": "./public/assets",
+    "javascripts": "./public/js",
+    "views": "./views",
+    "controllers": "./controllers",
+    "models": "./models"
+  },
+  "directories.lib": {
+    "lib": "./lib"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenisSabo/Wt-Project.git"
+  },
+  "keywords": [
+    "Webgallery",
+    "Gallery",
+    "Instagram",
+    "Webtechnologie",
+    "Webtechnology"
+  ],
+  "dependencies": {
+  	"express": "latest",
+  	"mongodb": "latest"
+  },
+  "author": "Ludwig, Raphael und Denis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenisSabo/Wt-Project/issues"
+  },
+  "homepage": "https://github.com/DenisSabo/Wt-Project#readme"
+}
