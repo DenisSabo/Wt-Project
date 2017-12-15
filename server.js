@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('./config')();
+var config = require('config');
 var app = express();
 
 //get '/' is listening on the index file
@@ -9,10 +9,12 @@ app.get('/', function (req, res){
 });
 */
 //express command that tell where to look for static files
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public")); //????
 
+app.get("/",function(req,res){
+    res.sendfile("./views/index.html");
+})
 
-
-http.createServer(app).listen(config.port, function(){
-    console.log('Express server listening on port ' + config.port);
+app.listen(config.get("WebServer.port"), function(){
+    console.log(('Express server listening on port ' + config.get("WebServer.port")));
 });

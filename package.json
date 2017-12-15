@@ -30,8 +30,9 @@
     "Webtechnology"
   ],
   "dependencies": {
-  	"express": "latest",
-  	"mongodb": "latest"
+    "config": "^1.28.1",
+    "express": "latest",
+    "mongodb": "latest"
   },
   "author": "Ludwig, Raphael und Denis",
   "license": "ISC",

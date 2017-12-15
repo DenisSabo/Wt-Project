@@ -1,0 +1,14 @@
+{
+  "WebServer": {
+    "protocol": "http",
+    "port": 3000
+  },
+  "MySQL": {
+    "user": "user",
+    "password": "pw",
+    "database": "src"
+  },
+  "MongoDB": {
+    "connectionString": "connectionstring"
+  }
+}
