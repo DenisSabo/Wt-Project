@@ -11,7 +11,9 @@
         npm install config --save
     ```
 
-3. Start the webserver on localhost
+3. open the repository folder in IDEA WebStorm/PHPStorm and install the package.json dependencies
+
+4. Start the webserver on localhost
 
     ```sh
         node server.js
