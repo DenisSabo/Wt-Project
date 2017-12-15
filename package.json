@@ -32,7 +32,8 @@
   "dependencies": {
     "config": "^1.28.1",
     "express": "latest",
-    "mongodb": "latest"
+    "googleapis": "^23.0.0",
+    "mongodb": "^3.0.0-rc0"
   },
   "author": "Ludwig, Raphael und Denis",
   "license": "ISC",
