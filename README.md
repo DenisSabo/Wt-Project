@@ -4,19 +4,13 @@
 
 1. get [node.js](https://nodejs.org/en/) <-- click for more information on how to obtain it
 
-2. install the following extensions via node package management "npm" using a command line tool
-
+2. open the repository folder in IDEA WebStorm/PHPStorm or run the following command in the repository folder
     ```sh
-        $ npm install express --save
-        $ npm install config --save
-        $ npm install mongodb --save
-        $ npm install googleapis --save
+        $ npm install
     ```
+    to install all packages from the package.json file
 
-3. open the repository folder in IDEA WebStorm/PHPStorm and install the package.json dependencies
-
-4. Start the webserver on localhost
-
+1. Start the webserver on localhost
     ```sh
         $ node server.js
     ```
