@@ -1,4 +1,7 @@
 {
+  "OAUTH2_CLIENT_ID": "CLIENT_ID",
+  "OAUTH2_CLIENT_SECRET": "CLIENT_SECRET",
+  "OAUTH2_CALLBACK": "http://localhost:8080/auth/google/callback",
   "WebServer": {
     "protocol": "http",
     "port": 3000
