@@ -9,7 +9,7 @@ app.get('/', function (req, res){
 });
 */
 //express command that tell where to look for static files
-app.use(express.static(__dirname + "/public")); //????
+app.use('/public', express.static(__dirname + '/public'));
 
 app.get("/",function(req,res){
     res.sendfile("./views/index.html");
