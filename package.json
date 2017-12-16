@@ -33,6 +33,7 @@
     "config": "^1.28.1",
     "express": "latest",
     "googleapis": "^23.0.0",
+    "jquery": "^3.2.1",
     "mongodb": "^3.0.0-rc0"
   },
   "author": "Ludwig, Raphael und Denis",
