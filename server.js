@@ -8,6 +8,10 @@ var config = require('config');
 var indexRoute = require('./lib/index');
 var oauth2Route = require('./lib/oauth2');
 
+//more routes
+var filterImages = require("./routes/filterImages.js");
+var manageImages = require("./routes/manageImages.js");
+
 // init express
 var app = express();
 
@@ -33,6 +37,16 @@ app.use(oauth2Route.router);
 
 // first route
 app.use("/", indexRoute);
+
+// routes for handling requests, that have something todo with images
+app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
+app.use('/images/manage', manageImages);
+
+
+//serves jQuery framework in directory root/lib (for frontend)
+app.get("/jquery-3.2.1.js", function(req, res){
+	res.sendfile(__dirname + "/lib/jquery-3.2.1.js");
+});
 
 // listen on port
 app.listen(config.get("WebServer.port"), function(){
