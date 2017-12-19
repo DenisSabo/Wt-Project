@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var manage_images_controller = require('../controller/manageImagesController.js');
+var manage_images_controller = require('../controllers/manageImagesController.js');
 
 //For uploading images to page, post JSON to "localhost:3000/images/manage".
 router.post("/", manage_images_controller.image_create_post);

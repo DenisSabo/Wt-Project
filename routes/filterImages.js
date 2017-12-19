@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var filter_images_controller = require('../controller/filterImagesController.js');
+var filter_images_controller = require('../controllers/filterImagesController.js');
 
 /*if get requests goes to "localhost/images/filter/popular", router will 
 use function image_popular_list in filterImagesController */
