@@ -1,29 +1,23 @@
 var express = require('express');
 var router = express.Router();
+var filter_images_controller = require('../controller/filterImagesController.js');
 
-//localhost/images/filter/popular 
-router.get("/popular", (res, req) => {
-
-})
+/*if get requests goes to "localhost/images/filter/popular", router will 
+use function image_popular_list in filterImagesController */
+router.get("/popular", filter_images_controller.image_popular_list);
 
 //most recent images, uploaded on this page
-router.get("/newest", (res, req) => {
+router.get("/newest", filter_images_controller.image_recent_list);
 
-})
+//get images from any category 
+router.get("/category/:category", filter_images_controller.image_category_list);
 
-//get images from categorie "nature"
-router.get("/nature", (res, req) => {
+//get images that were taken at one specific place
+router.get("/place/:place", filter_images_controller.image_place_list);
 
-})
+//get images of one specific user
+router.get("/user/:user", filter_images_controller.image_user_list);
 
-//category urban
-router.get("/urban", (res, req) => {
 
-})
-
-//category "other"
-router.get("/other", (res, req) => {
-
-})
 
 module.exports = router;
