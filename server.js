@@ -7,6 +7,7 @@ var config = require('config');
 // routes
 var indexRoute = require('./lib/index');
 var oauth2Route = require('./lib/oauth2');
+var getAccountAPIRoute = require('./routes/getAccountAPI');
 
 //more routes
 var filterImages = require("./routes/filterImages.js");
@@ -37,6 +38,9 @@ app.use(oauth2Route.router);
 
 // first route
 app.use("/", indexRoute);
+
+//login route
+app.use("/getAccount", getAccountAPIRoute);
 
 // routes for handling requests, that have something todo with images
 app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
