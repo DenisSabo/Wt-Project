@@ -40,7 +40,8 @@
     "mongodb": "^3.0.0-rc0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "vue": "^2.5.11"
   },
   "author": "Ludwig, Raphael und Denis",
   "license": "ISC",
