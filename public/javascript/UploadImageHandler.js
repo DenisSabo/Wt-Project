@@ -19,13 +19,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	//"Image image = new Image(title, author, description, arrTags, categories, imageType, pic);" 
 	var image = {
 		//can do it without "key" at the end as well
-		titleKey: title,
-		authorKey: author,
-		descriptionKey: description,
-		tagsKey: arrTags,
-		categoriesKey: categories,
-		imageTypeKey: imageType,
-		binaryDataKey: pic
+		title: title,
+		author: author,
+		description: description,
+		tags: arrTags,
+		categories: categories,
+		URLOfImage: pic,
+		//needed if we want to safe images as binary and not in local filesystem
+		imageType: imageType,
+
 
 	};
 
@@ -33,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		//make ajax request to imagesAPI
 		var imageJson = JSON.stringify(image);
 		$.ajax({
-			url: "/images",
+			url: "localhost:3000/images/manage/",
 			method: "POST",
 			contentType: "application/json",
 			data: imageJson

@@ -3,6 +3,21 @@ var express = require('express');
 var expressSession = require('express-session');
 var passport = require('passport');
 var config = require('config');
+const bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+//Set up default mongoose connection
+var mongoDB = 'mongodb://127.0.0.1/Project-WebGallery';
+mongoose.connect(mongoDB, {
+  useMongoClient: true
+});
+// Get Mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // routes
 var indexRoute = require('./lib/index');
@@ -18,6 +33,9 @@ var app = express();
 
 // set route for static files like css,js
 app.use('/public', express.static(__dirname + '/public'));
+
+// treat all request bodies as application/json
+app.use(express.json());
 
 // [START session]
 // Configure the session and session storage.
