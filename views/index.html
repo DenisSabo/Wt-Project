@@ -1,41 +1,31 @@
 <!DOCTYPE html>
 <html>
 
-<title>WT</title>
+
+<title>Home/Login</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../public/stylesheets/main.css">
+<link rel="stylesheet" href="/public/stylesheets/main.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="/jquery-3.2.1.js"></script>
-<script src="/public/javascript/UploadImageHandler.js"></script>
 <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
 <body class="light-grey content" style="max-width:1600px">
-
-<!-- Sidebar/menu -->
 <nav class="sidebar collapse white animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
     <div class="container">
         <a href="#" onclick="wt_close()" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-        <img src="https://w3schools.com/w3images/avatar_g2.jpg" style="width:45%;" class="round"><br><br>
-        <h4><b>PORTFOLIO</b></h4>
+        <h4><b><i class="fa fa-user" aria-hidden="true"></i>  Sign in</b></h4>
     </div>
     <div class="bar-block">
-        <a href="#portfolio" onclick="wt_close()" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
-        <a href="#about" onclick="wt_close()" class="bar-item button padding"><i class="fa fa-user fa-fw margin-right"></i>ABOUT</a>
-        <a href="#contact" onclick="wt_close()" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>CONTACT</a>
+        <div class="bar-item margin-top"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
+        <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
+        <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Login</button>
     </div>
-    <div class="panel large">
-        <i class="fa fa-facebook-official hover-opacity"></i>
-        <i class="fa fa-instagram hover-opacity"></i>
-        <i class="fa fa-snapchat hover-opacity"></i>
-        <i class="fa fa-pinterest-p hover-opacity"></i>
-        <i class="fa fa-twitter hover-opacity"></i>
-        <i class="fa fa-linkedin hover-opacity"></i>
-    </div>
+
+
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -45,36 +35,28 @@
 <div class="main" style="margin-left:300px">
 
     <!-- Header -->
-    <header id="portfolio">
+    <header id="Home">
         <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
         <span class="button hide-large xxlarge hover-text-grey" onclick="wt_open()"><i class="fa fa-bars"></i></span>
         <div class="container">
-            <h1><b>My Portfolio</b></h1>
+            <h1><b>Home</b></h1>
             <div class="section bottombar padding-16">
                 <span class="margin-right">Filter:</span>
-                <button class="button black">ALL</button>
-                <button class="button white"><i class="fa fa-diamond margin-right"></i>Design</button>
-                <button class="button white hide-small"><i class="fa fa-photo margin-right"></i>Photos</button>
-                <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Art</button>
+                <button class="button black"><i class="fa fa-users margin-right"></i>ALL</button>
+                <button class="button white"><i class="fa fa-user-o margin-right"></i>Denis</button>
+                <button class="button white"><i class="fa fa-user-o margin-right"></i>Ludwig</button>
+                <button class="button white"><i class="fa fa-user-o margin-right"></i>Raphael</button>
+                <br>
+                <div class="section bottombar margin-top">
+                <span class="margin-right">Tags:</span>
+                <span class="tag grey small smargin-bottom">Travel</span> <span class="tag grey small margin-bottom">Ideas</span>
+                <span class="tag grey small margin-bottom">Family</span> <span class="tag grey small margin-bottom">Clothing</span>
+                <span class="tag grey small margin-bottom">Shopping</span> <span class="tag grey small margin-bottom">Sports</span>
+                <span class="tag grey small margin-bottom">Games</span>
+            </div>
             </div>
         </div>
     </header>
-
-    <!-- Form for uploading images. Currently no css for this form implemented --> 
-    <form >
-    <label for="title"> Title of image </label>
-    <input type="text" name="title" id="title">
-    <label for="description"> Describe your image briefly. </label>
-    <input type="text" name="description"  id="description">
-    <!--  Tags werden im backend durch Leerzeichen getrennt --> 
-    <!--  Vielleicht könnte man das dem User mit Hilfe von Design verdeutlichen -->
-    <label for="tags"> Define tags that will improve search results for your image! </label>
-    <input type="text" name="tags" id="tags">
-    <label for="pic"> Search for file </label>  
-    <input type="file" name="pic" id="pic" accept="image/*">
-    <button type="button" id="uploadImage">Upload image</button>
-  </form>
-
     <!-- First Photo Grid-->
     <div class="row-padding">
         <div class="third container margin-bottom">
@@ -137,112 +119,18 @@
         </div>
     </div>
 
-    <!-- Images of Me -->
-    <div class="row-padding padding-16" id="about">
-        <div class="col m6">
-            <img src="https://w3schools.com/w3images/avatar_g.jpg" alt="Me" style="width:100%">
-        </div>
-        <div class="col m6">
-            <img src="https://w3schools.com/w3images/me2.jpg" alt="Me" style="width:100%">
-        </div>
-    </div>
+    <script>
+        // Script to wt_open and wt_close sidebar
+        function wt_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("myOverlay").style.display = "block";
+        }
 
-    <div class="container padding-large" style="margin-bottom:32px">
-        <h4><b>About Me</b></h4>
-        <p>Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        <hr>
-
-    </div>
-
-    <!-- Contact Section -->
-    <div class="container padding-large grey">
-        <h4 id="contact"><b>Contact Me</b></h4>
-        <div class="row-padding center padding-24" style="margin:0 -16px">
-            <div class="third dark-grey">
-                <p><i class="fa fa-envelope xxlarge text-light-grey"></i></p>
-                <p>email@email.com</p>
-            </div>
-            <div class="third teal">
-                <p><i class="fa fa-map-marker xxlarge text-light-grey"></i></p>
-                <p>Chicago, US</p>
-            </div>
-            <div class="third dark-grey">
-                <p><i class="fa fa-phone xxlarge text-light-grey"></i></p>
-                <p>512312311</p>
-            </div>
-        </div>
-        <hr class="opacity">
-        <form action="/action_page.php" target="_blank">
-            <div class="section">
-                <label>Name</label>
-                <input class="input border" type="text" name="Name" required>
-            </div>
-            <div class="section">
-                <label>Email</label>
-                <input class="input border" type="text" name="Email" required>
-            </div>
-            <div class="section">
-                <label>Message</label>
-                <input class="input border" type="text" name="Message" required>
-            </div>
-            <button type="submit" class="button black margin-bottom"><i class="fa fa-paper-plane margin-right"></i>Send Message</button>
-        </form>
-    </div>
-
-    <!-- Footer -->
-    <footer class="container padding-32 dark-grey">
-        <div class="row-padding">
-            <div class="third">
-                <h3>FOOTER</h3>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-
-            <div class="third">
-                <h3>BLOG POSTS</h3>
-                <ul class="ul hoverable">
-                    <li class="padding-16">
-                        <img src="https://w3schools.com/w3images/workshop.jpg" class="left margin-right" style="width:50px">
-                        <span class="large">Lorem</span><br>
-                        <span>Sed mattis nunc</span>
-                    </li>
-                    <li class="padding-16">
-                        <img src="https://w3schools.com/w3images/gondol.jpg" class="left margin-right" style="width:50px">
-                        <span class="large">Ipsum</span><br>
-                        <span>Praes tinci sed</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="third">
-                <h3>POPULAR TAGS</h3>
-                <p>
-                    <span class="tag black margin-bottom">Travel</span> <span class="tag grey small margin-bottom">New York</span> <span class="tag grey small margin-bottom">London</span>
-                    <span class="tag grey small margin-bottom">IKEA</span> <span class="tag grey small margin-bottom">NORWAY</span> <span class="tag grey small margin-bottom">DIY</span>
-                    <span class="tag grey small margin-bottom">Ideas</span> <span class="tag grey small margin-bottom">Baby</span> <span class="tag grey small margin-bottom">Family</span>
-                    <span class="tag grey small margin-bottom">News</span> <span class="tag grey small margin-bottom">Clothing</span> <span class="tag grey small margin-bottom">Shopping</span>
-                    <span class="tag grey small margin-bottom">Sports</span> <span class="tag grey small margin-bottom">Games</span>
-                </p>
-            </div>
-
-        </div>
-    </footer>
-
-
-    <!-- End page content -->
-</div>
-
-<script>
-    // Script to wt_open and wt_close sidebar
-    function wt_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
-    }
-
-    function wt_close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("myOverlay").style.display = "none";
-    }
-</script>
+        function wt_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("myOverlay").style.display = "none";
+        }
+    </script>
 
 </body>
 </html>

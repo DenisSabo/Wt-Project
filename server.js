@@ -34,6 +34,11 @@ var app = express();
 // set route for static files like css,js
 app.use('/public', express.static(__dirname + '/public'));
 
+//localhost/signedIn
+app.get("/loggedIn", function(req, res) {
+	res.sendfile(__dirname + "/views/LoggedIn.html");
+});
+
 // treat all request bodies as application/json
 app.use(express.json());
 
