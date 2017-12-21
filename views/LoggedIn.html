@@ -62,16 +62,24 @@
 
     <!-- Form for uploading images. Currently no css for this form implemented --> 
     <form id="imageUploadForm" method="POST" enctype="multipart/form-data">
+
     <label for="title"> Title of image </label>
-    <input type="text" name="title" id="title">
+    <input type="text" name="title" id="title" placeholder="Christmas with family ..." required>
+
     <label for="description"> Describe your image briefly. </label>
-    <input type="text" name="description"  id="description">
-    <!--  Tags werden im backend durch Leerzeichen getrennt --> 
-    <!--  Vielleicht könnte man das dem User mit Hilfe von Design verdeutlichen -->
-    <label for="tags"> Define tags that will improve search results for your image! </label>
-    <input type="text" name="tags" id="tags">
-    <label for="pic"> Search for file </label>  
-    <input type="file" name="pic" id="pic" >
+    <input type="text" name="description"  id="description" placeholder="Best cook on earth: Mom">
+
+    <!-- Hint should be hidden. If clicked on icon: show hint -->
+    <label for="tags"> Define tags that will improve search results for your image! Hint: Words with whitespace inbetween, will be treated as different tags. For example: 
+    You write: 'Family Christmas Love', Tag 1: Family, Tag 2: Christmas, Tag 3: Love</label>
+    <input type="text" name="tags" id="tags" placeholder="Tag1 Tag2 Tag3 ...">
+
+    <label for="tags"> Assign one ore more categories two your picture</label>
+    <input type="text" name="categories" id="categories" placeholder="Category1 Category2 ...">
+
+    <label for="pic"> Search for an image on your computer </label>  
+    <input type="file" name="pic" id="pic" accept="image/png|image/jpg|image/jpeg|image/gif">
+
     <input type="submit" id="uploadImage" value="Upload Image"></input>
   </form>
 
