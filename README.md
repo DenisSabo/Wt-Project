@@ -10,7 +10,18 @@
     ```
     to install all packages from the package.json file
 
-1. Start the webserver on localhost
+3. Make sure MongoDB is installed.
+   Browse to project's directory (with bash) and type
+   ```sh
+       $ sudo mongod
+   ```
+ 4. With a second bash, browse to projects directory again
+    and type
+    ```sh
+       $ npm start
+    ```
+    or
     ```sh
         $ node server.js
     ```
+   
