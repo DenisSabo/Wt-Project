@@ -4,6 +4,9 @@ var expressSession = require('express-session');
 var passport = require('passport');
 var config = require('config');
 const bodyParser = require('body-parser');
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 var mongoose = require('mongoose');
 
 //Set up default mongoose connection
@@ -39,9 +42,6 @@ app.get("/loggedIn", function(req, res) {
 	res.sendfile(__dirname + "/views/LoggedIn.html");
 });
 
-// treat all request bodies as application/json
-app.use(express.json());
-
 // [START session]
 // Configure the session and session storage.
 const sessionConfig = {
@@ -65,8 +65,16 @@ app.use("/", indexRoute);
 //login route
 app.use("/getAccount", getAccountAPIRoute);
 
-// routes for handling requests, that have something todo with images
+/* ROUTER FOR HANDLING IMAGES */
+
+
+
 app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
+
+/* ADD COMMENT , jsonParser, upload.single()*/
+
+// multipart/form-data
+app.use("/images/manage", upload.single("file"));
 app.use('/images/manage', manageImages);
 
 

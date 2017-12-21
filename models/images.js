@@ -7,43 +7,73 @@ var Schema = mongoose.Schema;
 var ImageModelSchema = new Schema({
 	title: { 
 		type: String, 
-		minlength: 3,
-		maxlength: 15,
-		required: true 
+		minlength: [3, "Title has to contain at least 3 characters!"],
+		maxlength: [15, "Title cannot be longer than 15 characters!"],
+		required: [true, "Title of image is missing!"] 
 	}, 
-	author: { //TODO add as foreign key to ./author.js
+	//TODO add as foreign key to ./author.js
+	author: { 
 		type: String,
-		minlength: 3,
-		maxlength: 15, 
-		required: true 
+		minlength: [3, "Author name has to contain at least 3 characters!"], 
+		maxlength: [20, "Author name cannot be longer than 20 characters!"],
+		required: [true, "Author/Username is missing!"] 
 	},
 	description: {
 		type: String,
-		maxlength: 200
+		maxlength: [200, "Sorry, but the description cannot be longer than 200 characters!"]
 	},
-	tags: [String], //Used for searching later (Tags + title + maybe: categories)
-	categories: [String],
-	place: String, //Where did they shoot the picture?
-	url: String, //where can you find picture in local filesystem "root/images"
-	clicks: Number,
-	likes: Number,
-	timestamp: Date, //When was the picture uploaded?
-
-
-	//maybe later if we want to safe images as binary data in database. Usefull if data will be bigger than 16MB (GridFs ...)
-	/* 
+	//Used for searching later (Tags + title + maybe: categories)
+	tags: [String], 
+	categories: [String], 
+	//Where was the picture shot? (Country, City, point of interest, whatever)
+	place: { 	
+		type: String,
+		minlength: [3, "Name of place to small (min. 3 characters)!"],
+		maxlength: [20, "Name of place to long (max. 20 charachters)!"],
+	},
+	path: {
+		type : String,
+		required: [true, "Path to picture's destination is missing!"]
+	},
+	clicks: {
+		type : Number,
+		default : 0
+	},
+	likes: {
+		type : Number,
+		default : 0
+	},
+	date: { //Timestamp, client side (What if user is from another country)
+		type : Date, 
+		required: [true, "Date of image upload required!"]
+	},
 	imageType: {
 		type: String,
+		required: [true, "Image type is missing!"],
 		//you can add more image types here!
-		enum: ['png', 'jpg', 'gif']
-	},
-	
-	imageData: {
-		type: Buffer,
-		//required: true, later!!!!!!!!!!!!!!!!!!!!!!!
-		//unique: true //no same images 
+		enum: ['png', 'jpg', 'jpeg','gif']
 	}
-	*/
 });
+
+/* MORE VALIDATION ... YEAH! */
+ImageModelSchema.path('categories').validate(function (value) {
+	if(value.length > 3){
+		return false
+	}
+	else 
+		return true;
+}, 'Not more than 3 categories allowed'); 
+
+/* 
+ImageModelSchema.path('author').validate(function (value) {
+	if(value === "undefined" || value === "null"){
+		return false
+	}
+	else 
+		return true;
+}, 'Author cannot be undefined or null'); 
+*/
+
+
 								//Collection  //Schema that will be used for creating the model
 module.exports = mongoose.model("ImageModel", ImageModelSchema);

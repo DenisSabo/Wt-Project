@@ -2,56 +2,61 @@
 //uses image.js class. Found in "root/APIs/image.js"
 
 document.addEventListener("DOMContentLoaded", function(event) { 
+
 	//attack click event to button with id 'uploadImage'
-	$("#uploadImage").on("click", function(){
-	var title = $("input[name=title]").val();
-	var description = $("input[name=description]").val();
-	var tags = $("input[name=tags]").val();
-	var arrTags = stringTagsToArray(tags);
-	var pic = $("input[name=pic]").val();
-	var imageType = getImageType(pic);
-	var categories = "TODO";
-	var author = "TODO";
+	$("#imageUploadForm").submit(function( event ){
+		event.preventDefault(); //cancels submit action calling
 
-	//TODO get users name and send it with request
+		/* COLLECT ALL DATA OF FORM IN VARIABLES */
+		var title = $("input[name=title]").val(), author = $("input[name=author]").val(), description = $("input[name=description]").val(), 
+		tags = stringTagsToArray($("input[name=tags]").val()), categories = "TODO"; var file = $( "#pic" )[0].files[0];
+		console.log("Collected data : " + title + author + description + tags + categories + file);
+		
+		//var dataFile = new FormData(); //data of picture 
+		var stringData = new FormData();
+		var data = new FormData();
 
-	
-	//"Image image = new Image(title, author, description, arrTags, categories, imageType, pic);" 
-	var image = {
-		//can do it without "key" at the end as well
-		title: title,
-		author: author,
-		description: description,
-		tags: arrTags,
-		categories: categories,
-		URLOfImage: pic,
-		//needed if we want to safe images as binary and not in local filesystem
-		imageType: imageType,
+		/* Data with type string will be appended to stringData: https://developer.mozilla.org/de/docs/Web/API/FormData/FormData */
+		data.append("title", title);
+		data.append("author", author);
+		data.append("description", description);
+		data.append("date", $.now());
+		data.append("tags", tags);
+		data.append("categories", categories);
+		data.append("file", file);
 
+		/* TODO: Client side validation */
 
-	};
-
-	console.log(image);
-		//make ajax request to imagesAPI
-		var imageJson = JSON.stringify(image);
 		$.ajax({
-			url: "localhost:3000/images/manage/",
+			url: "/images/manage",
 			method: "POST",
-			contentType: "application/json",
-			data: imageJson
-
-			//TODO handle response!!!
-
+			processData: false,
+			contentType: false, //https://stackoverflow.com/questions/29746727/upload-file-on-express-js-app
+			data: data
 		})
 		.done(function( msg ){
-			console.log(msg);
+			alert(msg + " String data was send to server");
 		})
 		.fail(function( jqXHR, textStatus ){
 			alert( "Request failed: " + textStatus );
 		});
+		/* 
+	$.ajax({
+			url: "/images/manage",
+			method: "POST",
+			contentType: 'multipart/form-data',
+			processData: false, // jQuery wont transform data in query string
+			data: dataFile
+		})
+		.done(function( msg ){
+			console.log(msg +" Data file was send to server");
+		})
+		.fail(function( jqXHR, textStatus ){
+			alert( "Request failed: " + textStatus );
+		});
+		*/
 	});
 });
-
 
 function stringTagsToArray(tags){
 	if(typeof(tags) === "string"){

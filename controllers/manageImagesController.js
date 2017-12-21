@@ -1,21 +1,42 @@
 var Image = require('../models/images.js');
+var fs = require("fs");
 
 //QUESTION: maybe we can/should put filterImagesController and manageImagesController together?
 
 //Handle image creation on post
 exports.image_create_post = function(req, res) {
 	console.log("manageImagesController/image_create_post: " + req);
-	//validate request
-	var returnedObj = createImageIfValid(req, res)
-	if(returnedObj.validRequest){
-		//TODO images schema still not perfect (duplicates possible)
-		//TODO URL of image in local filesystem
-		//TODO handle error if entry cannot be safed !!!
-	res.send('NOT FULLY IMPLEMENTED: Image create on post');
-	}
-	else{
-		res.send(returnedObject.errMessage);
-	}
+
+	var contentType = req.get("Content-Type");
+	//jQuery sets datatype to urlencoded, forcing it to set Contet-Type to multipart/form-data leads to errors
+	if(contentType = "application/x-www-form-urlencoded"){
+		/* COLLECT DATA*/
+		var fileEnding =  getMimeTypeEnding(req.file.mimetype);
+
+		var image = {
+			/* VALIDATION IN ROOT/models/images.js */
+			title : req.body.title,
+			author : req.body.author,
+			description : req.body.description,
+			tags : req.body.tags,
+			categories : req.body.categories,
+			place : req.body.place,
+			path : req.file.path,
+			timestamp : req.body.date,
+			fileType : fileEnding
+		}
+		
+
+		//trying to insert into db
+		insertImage(image, function(err){
+			console.log(err);
+		});
+
+
+        // Create an instance of model ImageModel, by giving it the send json as js object
+        
+    }    
+
 };
 
 //Handle image delete on delete
@@ -31,56 +52,56 @@ exports.image_change_put = function(req, res) {
 	res.send('NOT IMPLEMENTED: Image change on update');
 };
 
-/* Bad request: Sends response to client with ErrorMessage and status code
-   Good request: returns true */
-function createImageIfValid(req, res){
-		console.log(req.body);
-	//return has to contain two values, 1: Was request valid? 2: If not, why?
-	var returnObject = {
-		validRequest: true,
-		errMessage: null
+/* TODO : Eigene Funktionen für die Queries erstellen!!! */
+
+/* Functions for validation */
+function validateType(mimeType){
+	if(!notNull(mimeType)){
+		return false;
 	}
-
-	/* Content-Type header must be set to 'application/json'*/
-	var contentType =  req.get("Content-Type");
-
-	if(contentType !== "application/json"){
-		res.status(406).send("Not Acceptable : Content-Type header must be set to 'application/json'");
-		returnObject.validRequest = false;
-		return returnObject;
+	else if(mimeType.split("/", 2)[0] !== "image"){ //if first part of mime type is not image (image/jpeg ....)
+		return false;
 	}
-
-	//gets request body, that should be a json and parse it into normal javascript object
-	else if(req.body === null || req.body === undefined){
-		res.status(406).send("Not Acceptable : Request body must contain a valid JSON, but body was empty");
-		returnObject.validRequest = false;
-		return returnObject;
-	}
-
-	else{
-
-		//trying to insert into db
-		// Create an instance of model ImageModel, by giving it the send json as js object
-		var image_instance = new Image(req.body);
-
-		// Save the new model instance, passing a callback
-		image_instance.save(function (err) {
- 		 	if (err) {
- 		 		returnObject.validRequest = false;
- 		 		returnObject.errMessage = "Was not able to create entry! " + err;
- 		 		return returnObject;
- 		 	}
-
- 		 	else{
- 		 		//instance of image was created and safed in collection of database
- 		 		return returnObject;
- 		 	}
-  			// saved!
-  		});
-  		return returnObject;
-  	}	
 }
 
-/* Eigene Funktionen für die Queries erstellen!!! */
+/* Value cannot be null*/
+function notNull(anything){
+	if(typeof(anything) === null || typeof(anything) === undefined){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
 
+function getFileEnding(filename){
+	var arr = filename.split(".", 2);
+	return arr[1];
+}
+
+function getMimeTypeEnding(mimetype){
+	var arr = mimetype.split("/", 2);
+	return arr[1];
+}
+
+function insertImage(image, callback){
+	try{
+	var image_instance = new Image({ title : image.title, author: image.author, description: image.description, tags: image.tags, categories : 
+		image.categories, place : image.place, path : image.path, date : image.timestamp, imageType : image.fileType});
+	}catch(err){
+		//callback will be called with error message in parameter
+		callback(err);
+	}
+
+	// Save the new model instance, passing a callback
+        image_instance.save(function (err) {
+        	//err = error messages defined in Schema of image (root/models/image.js)
+              if (err) {
+                  callback(err);
+              	}
+			  else{
+                  console.log("Author/User '" +image.author + "' safed a image called '" + image.title + "' to our site.");
+              	}
+        });
+}
 
