@@ -38,12 +38,12 @@
     "googleapis": "^23.0.0",
     "jquery": "^3.2.1",
     "mongodb": "^3.0.0-rc0",
+    "mongoose": "^4.13.7",
+    "multer": "1.1.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
     "session": "^0.1.0",
-    "vue": "^2.5.11",
-    "mongoose": "*",
-    "multer": "1.1.0" 
+    "vue": "^2.5.11"
   },
   "author": "Ludwig, Raphael und Denis",
   "license": "ISC",
