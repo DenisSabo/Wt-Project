@@ -10,7 +10,7 @@ var upload = multer({ dest: 'uploads/' })
 var mongoose = require('mongoose');
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/Project-WebGallery';
+var mongoDB = config.get('MongoDB.connectionString');
 mongoose.connect(mongoDB, {
   useMongoClient: true
 });
