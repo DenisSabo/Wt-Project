@@ -43,6 +43,7 @@ const vueOptions = {
             { script: '/public/javascript/vue.js' },
             { script: '/public/javascript/jquery/core.js' },
             { script: '/public/javascript/jquery/jquery.js' },
+            { script: '/public/javascript/login.js' },
             { style: '/public/stylesheets/main.css' },
             { style: 'https://fonts.googleapis.com/css?family=Raleway' },
             { style: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' }
