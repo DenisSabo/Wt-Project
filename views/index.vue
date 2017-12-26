@@ -13,7 +13,7 @@
                 <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Login</button>
             </div>
         <div class="bar-block">
-                <h4><button type="submit" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
+            <h4><button type="submit" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
             </div>
             <div class="container">
             <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up</b></h4>
@@ -46,12 +46,12 @@
                         <button class="button white"><i class="fa fa-user-o margin-right"></i>Raphael</button>
                         <br>
                         <div class="section bottombar margin-top">
-                        <span class="margin-right">Tags:</span>
-                        <span class="tag grey small smargin-bottom">Travel</span> <span class="tag grey small margin-bottom">Ideas</span>
-                        <span class="tag grey small margin-bottom">Family</span> <span class="tag grey small margin-bottom">Clothing</span>
-                        <span class="tag grey small margin-bottom">Shopping</span> <span class="tag grey small margin-bottom">Sports</span>
-                        <span class="tag grey small margin-bottom">Games</span>
-                    </div>
+                            <span class="margin-right">Tags:</span>
+                            <span class="tag grey small smargin-bottom">Travel</span> <span class="tag grey small margin-bottom">Ideas</span>
+                            <span class="tag grey small margin-bottom">Family</span> <span class="tag grey small margin-bottom">Clothing</span>
+                            <span class="tag grey small margin-bottom">Shopping</span> <span class="tag grey small margin-bottom">Sports</span>
+                            <span class="tag grey small margin-bottom">Games</span>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -116,19 +116,7 @@
                     <a href="#" class="bar-item button hover-black">»</a>
                 </div>
             </div>
-
-            <script>
-                // Script to wt_open and wt_close sidebar
-                function wt_open() {
-                    document.getElementById("mySidebar").style.display = "block";
-                    document.getElementById("myOverlay").style.display = "block";
-                }
-
-                function wt_close() {
-                    document.getElementById("mySidebar").style.display = "none";
-                    document.getElementById("myOverlay").style.display = "none";
-                }
-            </script>
+        </div>
     </div>
 </template>
 
