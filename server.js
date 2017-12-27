@@ -8,8 +8,6 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var mongoose = require('mongoose');
-var expressVue = require('express-vue');
-var path = require('path');
 
 //Set up default mongoose connection
 var mongoDB = config.get('MongoDB.connectionString');
@@ -33,30 +31,8 @@ var getAccountAPIRoute = require('./routes/getAccountAPI');
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
 
-//VueExpress Options
-const vueOptions = {
-  rootPath: path.join(__dirname, './views'),
-  vue: {
-    head: {
-        title: '',
-        meta: [
-            { script: '/public/javascript/vue.js' },
-            { script: '/public/javascript/jquery/core.js' },
-            { script: '/public/javascript/jquery/jquery.js' },
-            { script: '/public/javascript/login.js' },
-            { style: '/public/stylesheets/main.css' },
-            { style: 'https://fonts.googleapis.com/css?family=Raleway' },
-            { style: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' }
-        ]
-    }
-  },
-};
-const expressVueMiddleware = expressVue.init(vueOptions);
-
 // init express
 var app = express();
-
-app.use(expressVueMiddleware);
 
 // set route for static files like css,js
 app.use('/public', express.static(__dirname + '/public'));

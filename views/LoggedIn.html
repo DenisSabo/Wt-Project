@@ -7,26 +7,25 @@
 <link rel="stylesheet" href="../public/stylesheets/main.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="/jquery-3.2.1.js"></script>
 <script src="/public/javascript/UploadImageHandler.js"></script>
 <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
 <body class="light-grey content" style="max-width:1600px">
-
+<div id="app">
 <!-- Sidebar/menu -->
 <nav class="sidebar collapse white animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
     <div class="container">
-        <a href="#" onclick="wt_close()" class="hide-large right jumbo padding hover-grey" title="close menu">
+        <a href="#" v-onclick="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
         <img src="https://w3schools.com/w3images/avatar_g2.jpg" style="width:45%;" class="round"><br><br>
         <h4><b>PORTFOLIO</b></h4>
     </div>
     <div class="bar-block">
-        <a href="#portfolio" onclick="wt_close()" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
-        <a href="#about" onclick="wt_close()" class="bar-item button padding"><i class="fa fa-user fa-fw margin-right"></i>ABOUT</a>
-        <a href="#contact" onclick="wt_close()" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>CONTACT</a>
+        <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
+        <a href="#about" class="bar-item button padding"><i class="fa fa-user fa-fw margin-right"></i>ABOUT</a>
+        <a href="#contact" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>CONTACT</a>
     </div>
     <div class="panel large">
         <i class="fa fa-facebook-official hover-opacity"></i>
@@ -39,7 +38,7 @@
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
-<div class="overlay hide-large animate-opacity" onclick="wt_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="overlay hide-large animate-opacity" v-on:click="wt_close" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
 <div class="main" style="margin-left:300px">
@@ -47,7 +46,7 @@
     <!-- Header -->
     <header id="portfolio">
         <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
-        <span class="button hide-large xxlarge hover-text-grey" onclick="wt_open()"><i class="fa fa-bars"></i></span>
+        <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
             <h1><b>My Portfolio</b></h1>
             <div class="section bottombar padding-16">
@@ -239,18 +238,42 @@
     <!-- End page content -->
 </div>
 
-<script>
-    // Script to wt_open and wt_close sidebar
-    function wt_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
-    }
-
-    function wt_close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("myOverlay").style.display = "none";
-    }
-</script>
-
+</div>
 </body>
 </html>
+
+<script src="/public/javascript/jquery/jquery.js"></script>
+<script src="/public/javascript/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            profilName: 'test',
+            profilPicUrl: '',
+        },
+        created: function(){
+            this.fetchData()
+        },
+        methods: {
+            fetchData: function () {
+                var self = this;
+                $.getJSON(window.location.origin + "/getAccount", function(result){ 
+                    if (result.hasOwnProperty('profilName')){
+                        self.profilName = result.displayName;
+                        self.profilPicUrl = result.image;; 
+                        }
+                    });
+                },
+            wt_open: function() {
+                document.getElementById("mySidebar").style.display = "block";
+                document.getElementById("myOverlay").style.display = "block";
+            },
+            wt_close: function() {
+                document.getElementById("mySidebar").style.display = "none";
+                document.getElementById("myOverlay").style.display = "none";
+            }
+        }
+    })
+
+</script>
+
