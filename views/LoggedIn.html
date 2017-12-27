@@ -23,6 +23,9 @@
         <h4><b>{{ profilName }}</b></h4>
     </div>
     <div class="bar-block">
+        <h4><button type="submit" v-on:click="GoogleLogout" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Logout</button></h4>
+    </div>
+    <div class="bar-block">
         <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
         <a href="#about" class="bar-item button padding"><i class="fa fa-user fa-fw margin-right"></i>ABOUT</a>
         <a href="#contact" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>CONTACT</a>
@@ -271,6 +274,9 @@
             wt_close: function() {
                 document.getElementById("mySidebar").style.display = "none";
                 document.getElementById("myOverlay").style.display = "none";
+            },
+            GoogleLogout: function(){
+                window.location = window.location.origin + "/auth/logout";
             }
         }
     })
