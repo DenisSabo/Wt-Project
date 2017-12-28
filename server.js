@@ -32,6 +32,7 @@ var getAccountAPIRoute = require('./routes/getAccountAPI');
 //more routes
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
+var basicAuth = require("./routes/basicAuth.js");
 
 //VueExpress Options
 const vueOptions = {
@@ -44,6 +45,7 @@ const vueOptions = {
             { script: '/public/javascript/jquery/core.js' },
             { script: '/public/javascript/jquery/jquery.js' },
             { script: '/public/javascript/login.js' },
+            { script: '/public/javascript/basicAuthHandler.js' },
             { style: '/public/stylesheets/main.css' },
             { style: 'https://fonts.googleapis.com/css?family=Raleway' },
             { style: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' }
@@ -101,6 +103,9 @@ app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/d
 app.use("/images/manage", upload.single("file"));
 app.use('/images/manage', manageImages);
 
+//Router "signupOrLogin.js" redirects requests to AuthController.js
+app.use("/login", basicAuth);
+app.use("/signup", basicAuth);
 
 //serves jQuery framework in directory root/lib (for frontend)
 app.get("/jquery-3.2.1.js", function(req, res){

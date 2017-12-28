@@ -8,9 +8,11 @@
                 <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in</b></h4>
             </div>
             <div class="bar-block">
-                <div class="bar-item margin-top"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
-                <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
+            <form id="loginForm" method="POST">
+                <div class="bar-item margin-top"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address" name="loginMail"></div>
+                <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password" name="loginPassword"></div>
                 <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Login</button>
+            </form>
             </div>
         <div class="bar-block">
             <h4><button type="submit" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
@@ -19,10 +21,12 @@
             <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up</b></h4>
             </div>
             <div class="bar-block">
-                <div class="bar-item margin-top"><i class="fa fa-user-o fa-fw margin-right"></i><input type="text" placeholder="Username"></div>
-                <div class="bar-item"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
-                <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
+            <form id="signupForm" method="POST">
+                <div class="bar-item margin-top"><i class="fa fa-user-o fa-fw margin-right"></i><input type="text" placeholder="Username" name="signupUsername"></div>
+                <div class="bar-item"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address" name="signupMail"></div>
+                <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password" name="signupPassword"></div>
                 <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Sign up</button>
+            </form>
             </div>
         </nav>
 
