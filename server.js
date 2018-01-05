@@ -8,16 +8,27 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var mongoose = require('mongoose');
-var expressVue = require('express-vue');
-var path = require('path');
+
+/**
+var storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: function (req, file, cb) {
+    cb(null, file.filename + '.' + getMimeTypeEnding(file.mimetype))
+  }
+})
+*/
+
+//var upload = multer({ storage: storage })
 
 //Set up default mongoose connection
 var mongoDB = config.get('MongoDB.connectionString');
 mongoose.connect(mongoDB, {
   useMongoClient: true
 });
+
 // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
+
 //Get the default connection
 var db = mongoose.connection;
 
@@ -34,34 +45,13 @@ var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
 var basicAuth = require("./routes/basicAuth.js");
 
-//VueExpress Options
-const vueOptions = {
-  rootPath: path.join(__dirname, './views'),
-  vue: {
-    head: {
-        title: '',
-        meta: [
-            { script: '/public/javascript/vue.js' },
-            { script: '/public/javascript/jquery/core.js' },
-            { script: '/public/javascript/jquery/jquery.js' },
-            { script: '/public/javascript/login.js' },
-            { script: '/public/javascript/basicAuthHandler.js' },
-            { style: '/public/stylesheets/main.css' },
-            { style: 'https://fonts.googleapis.com/css?family=Raleway' },
-            { style: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' }
-        ]
-    }
-  },
-};
-const expressVueMiddleware = expressVue.init(vueOptions);
-
-// init express
 var app = express();
 
-app.use(expressVueMiddleware);
-
-// set route for static files like css,js
+// serve static files in directory "public"
 app.use('/public', express.static(__dirname + '/public'));
+
+// serve uploaded images 
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 //localhost/signedIn
 app.get("/loggedIn", function(req, res) {
@@ -117,3 +107,12 @@ app.listen(config.get("WebServer.port"), function(){
     console.log(('Express server listening on port ' + config.get("WebServer.port")));
 });
 
+function getMimeTypeEnding(mimetype){
+  var arr = mimetype.split("/", 2);
+  if(arr[1] === "jpeg"){
+    return jpg;
+  }
+  else{
+    return arr[1];
+  }
+}

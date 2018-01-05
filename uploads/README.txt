@@ -1,2 +1,6 @@
-This directory will be used as local file storage.
-This means all  images will go in here ...
+This directory safes the images of users.
+
+The filename: GoogleUserID_ImageTitle_TimestampInMilliSeconds.fileEnding
+
+Possible improvements:
+- Directory for each user

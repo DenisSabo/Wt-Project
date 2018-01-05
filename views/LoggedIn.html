@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<title>WT</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/public/stylesheets/main.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/jquery-3.2.1.js"></script>
+<script src="/public/javascript/UploadImageHandler.js"></script>v
+<script src="/public/javascript/LoadUserImages.js"></script>
+<style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+<body class="light-grey content" style="max-width:1600px">
+<div id="app">
+<!-- Sidebar/menu -->
+<nav class="sidebar collapse white animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <div class="container">
+        <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
+            <i class="fa fa-remove"></i>
+        </a>
+        <img v-bind:src="profilPicUrl" style="width:45%;" class="round"><br><br>
+        <h4><b>{{ profilName }}</b></h4>
+    </div>
+    <div class="bar-block">
+        <h4><button type="submit" v-on:click="GoogleLogout" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Logout</button></h4>
+    </div>
+    <div class="bar-block">
+        <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
+        <a href="#upload" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>UPLOAD</a>
+    </div>
+    <div class="panel large">
+        <i class="fa fa-facebook-official hover-opacity"></i>
+        <i class="fa fa-instagram hover-opacity"></i>
+        <i class="fa fa-snapchat hover-opacity"></i>
+        <i class="fa fa-pinterest-p hover-opacity"></i>
+        <i class="fa fa-twitter hover-opacity"></i>
+        <i class="fa fa-linkedin hover-opacity"></i>
+    </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="overlay hide-large animate-opacity" v-on:click="wt_close" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="main" style="margin-left:300px">
+
+    <!-- Header -->
+    <header id="portfolio">
+        <a href="#"><img v-bind:src="profilPicUrl" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
+        <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
+        <div class="container">
+            <h1><b>My Portfolio</b></h1>
+            <div class="section bottombar padding-16">
+                <span class="margin-right">Filter:</span>
+                <button class="button black">My Images</button>
+                <button class="button white"><i class="fa fa-diamond margin-right"></i>Recent</button>
+                <button class="button white hide-small"><i class="fa fa-photo margin-right"></i>Popular</button>
+                <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Categories</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container that holds all images -->
+    <div id="parentOfImages">
+        <!-- ´WILL BE ADDED DYNAMICALLY: LoadUserImages.js -->
+    </div>
+
+    <div class="center padding-32">
+        <div class="bar" id="numberOfPages">
+            <!-- PAGE NUMBERS WILL BE ADDED DYNAMICALLY: LoadUserImages.js-->
+        </div>
+    </div>
+    
+       <!-- Upload Image -->
+        <div class="container padding-large grey">
+            <h4 id="upload"><b>Upload Image</b></h4>
+            <hr class="opacity">
+            <form id="imageUploadForm" method="POST" enctype="multipart/form-data">
+                <div class="section">
+                        <label for="title"> Title of image </label>
+                        <input class="input border" type="text" name="title" id="title"
+                               placeholder="Christmas with family ..." required>
+               </div>
+            <div class="section">
+                        <label for="description"> Describe your image briefly. </label>
+                        <input class="input border" type="text" name="description" id="description"
+                               placeholder="Best cook on earth: Mom">
+            </div>
+                        <!-- Hint should be hidden. If clicked on icon: show hint -->
+                    
+            <div class="section">
+                        <label for="tags" class="tooltip"> Define tags that will improve search results for your image!<span class="tooltiptext"> Hint: Words with
+                            whitespace inbetween, will be treated as different tags. For example:
+                            You write: 'Family Christmas Love', Tag 1: Family, Tag 2: Christmas, Tag 3: Love</span></label>
+
+                        <input class="input border" type="text" name="tags" id="tags" placeholder="Tag1 Tag2 Tag3 ...">
+            </div>
+            <div class="section">
+                        <label for="tags"> Assign one ore more categories two your picture</label>
+                        <input class="input border" type="text" name="categories" id="categories"
+                               placeholder="Category1 Category2 ...">
+            </div>
+            <div class="section">
+                        <label for="pic"> Search for an image on your computer </label>
+                        <input class="input" type="file" name="pic" id="pic"
+                               accept="image/png|image/jpg|image/jpeg|image/gif">
+            </div>
+            <button type="submit" class="button black margin-bottom" id="uploadImage" value="Upload Image"><i
+                    class="fa fa-upload fa-fw margin-right"></i>Upload Image</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="container padding-32 dark-grey">
+        <div class="row-padding">
+            <div class="third">
+                <h3>FOOTER</h3>
+                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+            </div>
+
+            <div class="third">
+                <h3>BLOG POSTS</h3>
+                <ul class="ul hoverable">
+                    <li class="padding-16">
+                        <img src="https://w3schools.com/w3images/workshop.jpg" class="left margin-right" style="width:50px">
+                        <span class="large">Lorem</span><br>
+                        <span>Sed mattis nunc</span>
+                    </li>
+                    <li class="padding-16">
+                        <img src="https://w3schools.com/w3images/gondol.jpg" class="left margin-right" style="width:50px">
+                        <span class="large">Ipsum</span><br>
+                        <span>Praes tinci sed</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="third">
+                <h3>POPULAR TAGS</h3>
+                <p>
+                    <span class="tag black margin-bottom">Travel</span> <span class="tag grey small margin-bottom">New York</span> <span class="tag grey small margin-bottom">London</span>
+                    <span class="tag grey small margin-bottom">IKEA</span> <span class="tag grey small margin-bottom">NORWAY</span> <span class="tag grey small margin-bottom">DIY</span>
+                    <span class="tag grey small margin-bottom">Ideas</span> <span class="tag grey small margin-bottom">Baby</span> <span class="tag grey small margin-bottom">Family</span>
+                    <span class="tag grey small margin-bottom">News</span> <span class="tag grey small margin-bottom">Clothing</span> <span class="tag grey small margin-bottom">Shopping</span>
+                    <span class="tag grey small margin-bottom">Sports</span> <span class="tag grey small margin-bottom">Games</span>
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- End page content -->
+</div>
+
+</div>
+</body>
+</html>
+
+<script src="/public/javascript/jquery/jquery.js"></script>
+<script src="/public/javascript/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            profilName: '',
+            profilPicUrl: '',
+        },
+        created: function(){
+            this.fetchData()
+        },
+        methods: {
+            fetchData: function () {
+                var self = this;
+                $.getJSON(window.location.origin + "/getAccount", function(result){ 
+                    if ('id' in result){
+                        self.profilName = result.displayName;
+                        self.profilPicUrl = result.image;
+                        }
+                    });
+                },
+            wt_open: function() {
+                document.getElementById("mySidebar").style.display = "block";
+                document.getElementById("myOverlay").style.display = "block";
+            },
+            wt_close: function() {
+                document.getElementById("mySidebar").style.display = "none";
+                document.getElementById("myOverlay").style.display = "none";
+            },
+            GoogleLogout: function(){
+                window.location = window.location.origin + "/auth/logout";
+            }
+        }
+    })
+
+</script>
+

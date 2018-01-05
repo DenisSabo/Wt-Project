@@ -7,6 +7,9 @@ router.post("/", manage_images_controller.image_create_post, function(){
 	console.log("POST: /images/manage router");
 });
 
+//serves uploaded files. 
+//router.get("/:id", manage_images_controller.image_id_get);
+
 //sends request to manageImagesControllers function image_delete_delete ...
 router.delete("/:id", manage_images_controller.image_delete_delete);
 //access via req.params.id

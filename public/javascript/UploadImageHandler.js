@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		/* COLLECT ALL DATA OF FORM IN VARIABLES */
 		var title = $("input[name=title]").val(), author = $("input[name=author]").val(), description = $("input[name=description]").val(), 
-		tags = stringTagsToArray($("input[name=tags]").val()), categories = "TODO"; var file = $( "#pic" )[0].files[0];
+																			//Nur vorübergehend. Später: Nur bestimmte Kategorien erlaubt
+		tags = stringTagsToArray($("input[name=tags]").val()), categories = stringTagsToArray($("input[name=categories]").val()); var file = $( "#pic" )[0].files[0];
 		console.log("Collected data : " + title + author + description + tags + categories + file);
 		
 		//var dataFile = new FormData(); //data of picture 

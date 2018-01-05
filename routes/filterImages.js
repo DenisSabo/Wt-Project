@@ -16,7 +16,10 @@ router.get("/category/:category", filter_images_controller.image_category_list);
 router.get("/place/:place", filter_images_controller.image_place_list);
 
 //get images of one specific user
-router.get("/user/:user", filter_images_controller.image_user_list);
+router.get("/user/all", filter_images_controller.image_user_list);
+
+//get one specific image
+router.get("/user/:id", filter_images_controller.image_user_list);
 
 
 

@@ -12,11 +12,11 @@ var ImageModelSchema = new Schema({
 		required: [true, "Title of image is missing!"] 
 	}, 
 	//TODO add as foreign key to ./author.js
-	author: { 
+	user: { 
 		type: String,
-		minlength: [3, "Author name has to contain at least 3 characters!"], 
-		maxlength: [20, "Author name cannot be longer than 20 characters!"],
-		required: [true, "Author/Username is missing!"] 
+		minlength: [3, "User name has to contain at least 3 characters!"], 
+		maxlength: [40, "User name cannot be longer than 20 characters!"],
+		required: [true, "User is missing!"] 
 	},
 	description: {
 		type: String,
