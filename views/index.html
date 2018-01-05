@@ -18,24 +18,25 @@
         <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-        <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in</b></h4>
-    </div>
-    <div class="bar-block">
+     </div>
+     <div class="container hover-text-red" id="signin">
+                <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in</b></h4>
+            </div>
+           <div class="container hover-text-red" id="signup">
+               <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up</b></h4>
+           </div>
+    <div class="bar-block" id="login">
         <div class="bar-item margin-top"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
         <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
         <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Login</button>
-    </div>
-<div class="bar-block">
         <h4><button type="submit" v-on:click="GoogleRedirect" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
     </div>
-    <div class="container">
-    <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up</b></h4>
-    </div>
-    <div class="bar-block">
+     <div class="bar-block" id="register">
         <div class="bar-item margin-top"><i class="fa fa-user-o fa-fw margin-right"></i><input type="text" placeholder="Username"></div>
         <div class="bar-item"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
         <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
         <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Sign up</button>
+        <h4><button type="submit" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up with Google</button></h4>
     </div>
 
 </nav>
@@ -158,5 +159,19 @@
             }
         }
     })
+</script>
+
+<script>
+    // Script to change between SignIn and SignUp
+    
+        $("#register").hide();
+    $("#signin").click(function(){
+        $("#register").hide();
+        $("#login").show();
+    });
+    $("#signup").click(function(){
+        $("#login").hide();
+        $("#register").show();
+    });
     
 </script>
