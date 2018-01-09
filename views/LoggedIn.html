@@ -76,7 +76,7 @@
     
        <!-- Upload Image -->
         <div class="container padding-large grey" id="uploadsection">
-            <h4 id="upload"><b>Upload Image</b></h4>
+            <h4 id="upload"><b>Upload Image</b><i class="fa fa-times right button" aria-hidden="true" id="closeuploadsection"></i></h4>
             <hr class="opacity">
             <form id="imageUploadForm" method="POST" enctype="multipart/form-data">
                 <div class="section">
@@ -202,8 +202,8 @@
  $("#openuploadsection").click(function(){
      $("#uploadsection").show();
  });
- $("#uploadsection").mouseleave(function(){
-     $("#uploadsection").hide();
- });
+ $("#closeuploadsection").click(function(){
+    $("#uploadsection").hide();
+});
 </script>
 
