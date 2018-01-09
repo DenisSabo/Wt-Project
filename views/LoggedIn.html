@@ -28,8 +28,8 @@
         <h4><button type="submit" v-on:click="GoogleLogout" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Logout</button></h4>
     </div>
     <div class="bar-block">
-        <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
-        <a href="#upload" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>UPLOAD</a>
+        <a href="#portfolio" class="bar-item button padding text-teal" id="openuploadsection"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
+        <a href="#upload" class="bar-item button padding"><i class="fa fa-upload fa-fw margin-right"></i>UPLOAD</a>
     </div>
     <div class="panel large">
         <i class="fa fa-facebook-official hover-opacity"></i>
@@ -75,7 +75,7 @@
     </div>
     
        <!-- Upload Image -->
-        <div class="container padding-large grey">
+        <div class="container padding-large grey" id="uploadsection">
             <h4 id="upload"><b>Upload Image</b></h4>
             <hr class="opacity">
             <form id="imageUploadForm" method="POST" enctype="multipart/form-data">
@@ -195,5 +195,15 @@
         }
     })
 
+</script>
+
+<script>
+ $("#uploadsection").hide();
+ $("#openuploadsection").click(function(){
+     $("#uploadsection").show();
+ });
+ $("#uploadsection").mouseleave(function(){
+     $("#uploadsection").hide();
+ });
 </script>
 
