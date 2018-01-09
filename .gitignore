@@ -12,6 +12,9 @@ yarn-error.log*
 #Config file with passwords/secrets
 config/default.json
 
+#Pictures
+*.png
+
 #IDEA IDE
 .idea/
 
