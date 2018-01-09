@@ -55,7 +55,7 @@ function generatePageNumbers(numberOfImages, images){
 	//first child of div 
 	$("#numberOfPages").append('<a href="#" class="bar-item button hover-black">«</a>'); //TODO add functionality
 
-	for(i = 1; numberOfImages > 0; i++){
+	for(var i = 1; numberOfImages > 0; i++){
 		//other childs, generated relatively to number of images
 		//$("#numberOfPages").append('<a href="#" class="bar-item button hover-black">'+ i +'</a>');
 
@@ -65,11 +65,21 @@ function generatePageNumbers(numberOfImages, images){
 			id: 'pageNumber' + i
 		}));
 		var currPage = '#pageNumber' + i;
+
+		console.log("Current page number: "  + i);
+
 		$(currPage).text(i);
 		//Attach click event to page numbers
-		$(currPage).click(function(i){
-			$("#parentOfImages").empty();
-			loadImages(images, "#parentOfImages", i)
+		$(currPage).click(function(){
+			var parent = "#parentOfImages";
+			console.log(this);
+			//for example: clickedElementsId = "pageNumber1"
+			var clickedElementsId = this.id;
+			//last char of it, is number of page "pageNumber1" lastChar: "1"
+			var numberOfPage = clickedElementsId.slice(-1);
+			//empty parent of images and load new images in container
+			$(parent).empty();
+			loadImages(images, parent, numberOfPage); 
 		});
 
 		numberOfImages = numberOfImages - 9; //One page has 9 images
@@ -97,7 +107,7 @@ function loadImages(images, parentContainer, numberOfPage){
     </div>
 
         */
-    numberOfPage = (numberOfPage - 1) * 9; //If current number of page is two, result will be 9. 9 Means that 9 pictures are already shown on previous page. So load images[10], images[11], ...
+    numberOfPage = ((numberOfPage - 1) * 9); //If current number of page is two, result will be 9. 9 Means that 9 pictures are already shown on previous page. So load images[10], images[11], ...
 	//appends div container to parentContainer, that representing a row
 	$(parentContainer).append($('<div>', {
 		class: 'row-padding',

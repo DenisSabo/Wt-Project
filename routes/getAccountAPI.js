@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function (req, res){
-    console.log(JSON.stringify(req.user));
-    console.log('AccountAPI started');
     res.setHeader('Content-Rype', 'application/json');
     if (req.user) res.send(JSON.stringify(req.user));
     else res.send(JSON.stringify({"data": "undefined"}));
