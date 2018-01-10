@@ -1,0 +1,133 @@
+<template>
+    <div id="app">
+        <nav class="sidebar collapse white animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+            <div class="container">
+                <a href="#" onclick="wt_close()" class="hide-large right jumbo padding hover-grey" title="close menu">
+                    <i class="fa fa-remove"></i>
+                </a>
+                <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in</b></h4>
+            </div>
+            <div class="bar-block">
+            <form id="loginForm" method="POST">
+                <div class="bar-item margin-top"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address" name="loginMail"></div>
+                <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password" name="loginPassword"></div>
+                <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Login</button>
+            </form>
+            </div>
+        <div class="bar-block">
+            <h4><button type="submit" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
+            </div>
+            <div class="container">
+            <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up</b></h4>
+            </div>
+            <div class="bar-block">
+            <form id="signupForm" method="POST">
+                <div class="bar-item margin-top"><i class="fa fa-user-o fa-fw margin-right"></i><input type="text" placeholder="Username" name="signupUsername"></div>
+                <div class="bar-item"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address" name="signupMail"></div>
+                <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password" name="signupPassword"></div>
+                <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Sign up</button>
+            </form>
+            </div>
+        </nav>
+
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="overlay hide-large animate-opacity" onclick="wt_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+        <!-- !PAGE CONTENT! -->
+        <div class="main" style="margin-left:300px">
+
+            <!-- Header -->
+            <header id="Home">
+                <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
+                <span class="button hide-large xxlarge hover-text-grey" onclick="wt_open()"><i class="fa fa-bars"></i></span>
+                <div class="container">
+                    <h1><b>Home</b></h1>
+                    <div class="section bottombar padding-16">
+                        <span class="margin-right">Filter:</span>
+                        <button class="button black"><i class="fa fa-users margin-right"></i>ALL</button>
+                        <button class="button white"><i class="fa fa-user-o margin-right"></i>Denis</button>
+                        <button class="button white"><i class="fa fa-user-o margin-right"></i>Ludwig</button>
+                        <button class="button white"><i class="fa fa-user-o margin-right"></i>Raphael</button>
+                        <br>
+                        <div class="section bottombar margin-top">
+                            <span class="margin-right">Tags:</span>
+                            <span class="tag grey small smargin-bottom">Travel</span> <span class="tag grey small margin-bottom">Ideas</span>
+                            <span class="tag grey small margin-bottom">Family</span> <span class="tag grey small margin-bottom">Clothing</span>
+                            <span class="tag grey small margin-bottom">Shopping</span> <span class="tag grey small margin-bottom">Sports</span>
+                            <span class="tag grey small margin-bottom">Games</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- First Photo Grid-->
+            <div class="row-padding">
+                <div class="third container margin-bottom">
+                    <img src="https://w3schools.com/w3images/mountains.jpg" alt="Norway" style="width:100%" class="hover-opacity">
+                    <div class="container white">
+                        <p><b>Lorem Ipsum</b></p>
+                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    </div>
+                </div>
+                <div class="third container margin-bottom">
+                    <img src="https://w3schools.com/w3images/lights.jpg" alt="Norway" style="width:100%" class="hover-opacity">
+                    <div class="container white">
+                        <p><b>Lorem Ipsum</b></p>
+                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    </div>
+                </div>
+                <div class="third container">
+                    <img src="https://w3schools.com/w3images/nature.jpg" alt="Norway" style="width:100%" class="hover-opacity">
+                    <div class="container white">
+                        <p><b>Lorem Ipsum</b></p>
+                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Photo Grid-->
+            <div class="row-padding">
+                <div class="third container margin-bottom">
+                    <img src="https://w3schools.com/w3images/p1.jpg" alt="Norway" style="width:100%" class="hover-opacity">
+                    <div class="container white">
+                        <p><b>Lorem Ipsum</b></p>
+                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    </div>
+                </div>
+                <div class="third container margin-bottom">
+                    <img src="https://w3schools.com/w3images/p2.jpg" alt="Norway" style="width:100%" class="hover-opacity">
+                    <div class="container white">
+                        <p><b>Lorem Ipsum</b></p>
+                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    </div>
+                </div>
+                <div class="third container">
+                    <img src="https://w3schools.com/w3images/p3.jpg" alt="Norway" style="width:100%" class="hover-opacity">
+                    <div class="container white">
+                        <p><b>Lorem Ipsum</b></p>
+                        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="center padding-32">
+                <div class="bar">
+                    <a href="#" class="bar-item button hover-black">«</a>
+                    <a href="#" class="bar-item black button">1</a>
+                    <a href="#" class="bar-item button hover-black">2</a>
+                    <a href="#" class="bar-item button hover-black">3</a>
+                    <a href="#" class="bar-item button hover-black">4</a>
+                    <a href="#" class="bar-item button hover-black">»</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+
+</script>
+
+<style lang="css">
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>

@@ -4,24 +4,21 @@
 
 1. get [node.js](https://nodejs.org/en/) <-- click for more information on how to obtain it
 
-2. open the repository folder in IDEA WebStorm/PHPStorm or run the following command in the repository folder
+2. get [mongodb](https://www.mongodb.com/) <-- click for more information on how to obtain it
+
+3. open the repository folder in IDEA WebStorm/PHPStorm or run the following command in the repository folder to install all packages from the package.json file
     ```sh
         $ npm install
     ```
-    to install all packages from the package.json file
 
-3. Make sure MongoDB is installed.
-   Browse to project's directory (with bash) and type
-   ```sh
-       $ sudo mongod
-   ```
- 4. With a second bash, browse to projects directory again
-    and type
+4. copy and rename the file **config/default.json.const** to **config/default.json** and enter your websettings
+
+5. look up whether mongodb service is running or not / start mondodb service
     ```sh
-       $ npm start
+        $ mongod
     ```
-    or
+
+6. Start the webserver on localhost
     ```sh
-        $ node server.js
+        $ npm start
     ```
-   
