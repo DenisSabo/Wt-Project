@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			alert(msg + " String data was send to server");
 		})
 		.fail(function( jqXHR, textStatus ){
-			alert( "Request failed: " + textStatus );
+			alert( "Error ocurred: Image was not uploaded" );
 		});
 		/* 
 	$.ajax({

@@ -90,7 +90,14 @@ app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/d
 /* ADD COMMENT , jsonParser, upload.single()*/
 
 // multipart/form-data
-app.use("/images/manage", upload.single("file"));
+app.use("/images/manage", function(){
+  upload(req, res, function(err){
+    if(req.fileValidationError) {
+              return res.status(406).end(req.fileValidationError);
+        }
+  })
+}); 
+
 app.use('/images/manage', manageImages);
 
 //Router "signupOrLogin.js" redirects requests to AuthController.js
