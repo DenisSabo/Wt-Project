@@ -37,9 +37,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		})
 		.done(function( msg ){
 			alert(msg + " String data was send to server");
+			//reload page so client gets new image as well
+			location.reload();
 		})
 		.fail(function( jqXHR, textStatus ){
-			alert( "Error ocurred: Image was not uploaded" );
+			alert( "Request failed: " + textStatus );
 		});
 		/* 
 	$.ajax({

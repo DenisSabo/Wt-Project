@@ -1,99 +1,10 @@
-//REGISTRATION
-	Vue.component('my-image', {
-		template: '\
-    		<div class="third container margin-bottom" v-on:click="showContentMenu">\
-      			<img v-bind:src="path" v-bind:alt="description" style="width:100%" class="hover-opacity">\
-      			<div class="container white">\
-      				<p><h4><b>{{ title }}</b></h4></p>\
-        			<p>{{ description }}</p>\
-       				<p><b>Tags:</b></p>\
-       					<ul> <li v-for="tag in tags"> {{ tag.text }} </li> </ul>  \
-        		<div class="bar" v-if="seenOnImageClick">\
-        			<button class="bar-item button grey" v-bind:id="edit" style="width: 50%" v-on:click="showDropdown"><i class="fa fa-pencil" aria-hidden="true"></i>\
-    					&nbsp;&nbsp;&nbsp;Edit Content\
-    				</button>\
-					\
-    				<button class="bar-item button black" style="width: 50%;"><i class="fa fa-trash" aria-hidden="true"></i>\
-    					&nbsp;&nbsp;&nbsp;Delete Content\
-    				</button>\
-    				<div class="dropdown-content" v-if="seenOnEditButtonClick">\
-    					<a href="#" class="bar-item button" v-on:click="editTitle">Title</a>\
-    					<a href="#" class="bar-item button" v-on:click="editDescription">Description</a>\
-    					<a href="#" class="bar-item button" v-on:click="editTags">Tags</a>\
-    					<a href="#" class="bar-item button" v-on:click="editCategories">Categories</a>\
-    				</div>\
-    			</div>\
-    		</div>\
-  		',
-  		data: function(){
-  			return {
-    			title: image.title,
-    			description: image.description,
-    			path: image.path,
-    			alt: image.description,
-    			seenOnImageClick: false,
-    			seenOnEditButtonClick: false
-  			}
-    	
-  		},
-  		methods: {
-  			showContentMenu: function(){
-  				if(seenOnImageClick === false){
-  					seenOnImageClick = true;
-  				}
-  				else{
-  					seenOnImageClick = false;
-  				}
-  			},
-  			showDropdown: function(){
-  				if(seenOnEditButtonClick === false){
-  					seenOnEditButtonClick = true;
-  				}
-  				else{
-  					seenOnImageClick = false;
-  				}
-  			},
-  			editTitle: function(){
-  				//TODO
-  			},
-  			editDescription: function(){
-  				//TODO
-  			},
-  			editTags: function(){
-  				//TODO
-  			},
-  			editCategories: function(){
-  				//TODO
-  			}
+// Load user images, at the beginning of user log in and if somebody clicks button "all" at his personal page
+//TODO Attach click events to generated page numbers
 
 
-  		},
-  		render() {
-  			return <div class="third container margin-bottom" v-on:click="showContentMenu">
-      			<img v-bind:src="path" v-bind:alt="description" style="width:100%" class="hover-opacity">
-      			<div class="container white">
-      				<p><h4><b>{{ title }}</b></h4></p>
-        			<p>{{ description }}</p>
-       				<p><b>Tags:</b></p>
-       					<ul> <li v-for="tag in tags"> {{ tag.text }} </li> </ul>  
-        		<div class="bar" v-if="seenOnImageClick">
-        			<button class="bar-item button grey" v-bind:id="edit" style="width: 50%" v-on:click="showDropdown"><i class="fa fa-pencil" aria-hidden="true"></i>
-    					&nbsp;&nbsp;&nbsp;Edit Content
-    				</button>
-					
-    				<button class="bar-item button black" style="width: 50%;"><i class="fa fa-trash" aria-hidden="true"></i>
-    					&nbsp;&nbsp;&nbsp;Delete Content
-    				</button>
-    				<div class="dropdown-content" v-if="seenOnEditButtonClick">
-    					<a href="#" class="bar-item button" v-on:click="editTitle">Title</a>
-    					<a href="#" class="bar-item button" v-on:click="editDescription">Description</a>
-    					<a href="#" class="bar-item button" v-on:click="editTags">Tags</a>
-    					<a href="#" class="bar-item button" v-on:click="editCategories">Categories</a>
-    				</div>
-    			</div>
-    		</div>
-  		}
-	})
+$( document ).ready(function() { //DOM loaded
+	getMyImages(); //AJAX request for getting images ... Dirty solution: loads all images of user at once ...
+});
 
 var generatedPages = 0;
 
@@ -111,16 +22,11 @@ function getMyImages(){
 
 			//Generate pages, depending on number of existing images
 			generatePageNumbers(numberOfImages, data);
-
-
 			//attachEventsToPageNumbers(generatedPages, data, parentContainer);
 			
 			//will load images in parentContainer
-			//var parentContainer = '#parentOfImages';
-			//loadImages(data, parentContainer, 1);
-
-			loadImageWithVue(data[i]);
-
+			var parentContainer = '#parentOfImages';
+			loadImages(data, parentContainer, 1);
 
 		})
 		.fail(function( jqXHR, textStatus ){
@@ -186,13 +92,6 @@ function generatePageNumbers(numberOfImages, images){
 }
 
 
-function loadImageWithVue(image){
-
-	
-}
-
-
-
 
 function loadImages(images, parentContainer, numberOfPage){
 	//GENERATES HTML CONTENT WITH GIVEN IMAGE DATA AND APPENDS IT TO PARENT CONTAINER
@@ -227,8 +126,6 @@ function loadImages(images, parentContainer, numberOfPage){
 
 		var currentRow = '#row' + x; // id of current row
 
-		buildImageElement
-
 		$(currentRow).append($('<div>', { //append image container to row
 			class: 'third container margin-bottom',
 			id: 'imgContainer' + i
@@ -245,99 +142,18 @@ function loadImages(images, parentContainer, numberOfPage){
 			id: 'metaContainer' + i
 		}));
 
-
-
-		//metaContainer is child of imgContainer
 		elToAppendTo = '#metaContainer'+ i;
 		$(elToAppendTo).append($('<p>', {
 			id: 'title' + i
 		}), $('<p>' , {
 			id: 'description' + i
-		}), $('<div>' , {
-			id: 'contentmenu' + i
 		}));
 
-		//, $('<p>' , {
-		//	id: 'tags' + i
-		//});
+		elToAppendTo = '#title' + i;
+		$(elToAppendTo).text(images[i + numberOfPage].title).wrapInner('<b></b>'); 
 
-		//title is p element and child of metaContainer
-		elToAppendTo = '#title' + i; //Adds title to images
-		$(elToAppendTo).text(images[i + numberOfPage].title).wrapInner('<b></b>').wrapInner('<h4></h4>'); 
-
-		//description is p element and child of metaContainer
-		elToAppendTo = '#description' + i; //Adds description to images
+		elToAppendTo = '#description' + i;
 		$(elToAppendTo).text(images[i + numberOfPage].description);
-
-
-		//contentmenu is div element and child of metaContainer
-		elToAppendTo = "#contentmenu" + i; 
-		$(elToAppendTo).append($("<button>", {//Grey button at the end of current contentmenu
-			class: "bar-item button grey",
-			id: "edit" + i,
-			style: "width: 50%"
-
-		}), $("<button>", { //Black button at the end of current contentmenu
-			class: "bar-item button black",
-			id: "delete" + i,
-			style: "width: 50%"
-
-		}), $("<div>", {
-			class: "dropdown-content",
-			id: "editmenu" + i
-		}));
-
-		//editmenu is div and child of contentmenu
-		elToAppendTo = "#editmenu" + i;
-		$(elToAppendTo).append($('<a>', {
-			href: "#",
-			class: "bar-item button",
-			id: "editTitle" + i
-		}), $('<a>', {
-			href: "#",
-			class: "bar-item button",
-			id: "editDescription" + i
-		}), $('<a>', {
-			href: "#",
-			class: "bar-item button",
-			id: "editTags" + i
-		}), $('<a>', {
-			href: "#",
-			class: "bar-item button",
-			id: "editCategories" + i
-		}));
-
-		//this elements are children of editmenu
-		$("#editTitle"+i).text("Title");
-		$("#editDescription"+i).text("Description");
-		$("#editTags"+i).text("Tags");
-		$("#editCategories" + i).text("Categories");
-
-
-		//adds font awesome to child for edit (button that is child of contentmenu)
-		$("#edit" + i).append('<i class="fa fa-pencil" aria-hidden="true"></i>'); //font awesome icon "pencil" added to grey button
-		//adds click event to edit elements, so dropbox will be shown on click
-		$("#edit" + i).click(function(){
-			$("#editmenu" + i).toggle();
-		});
-
-
-		$("#delete" + i).append('<i class="fa fa-trash" aria-hidden="true"></i>');//font awesome icon "trash" added to black button
-		//MAYBE ADD function
-
-		//elToAppendTo = '#tags' + i;
-		//$(elToAppendTo).text("TODO");
-
-		//adds click event to img container
-		$("#content" + i).click(function(){
-			$("#contentmenu" + i).toggle();
-		});
-
-		//elToAppendTo = "#contentmenu" + i;
-		//$(elToAppendTo).hide(); 
-
-		//elToAppendTo = "#editmenu" + i;
-		//$(elToAppendTo).hide(); //hides current contentmenu
 
 	}
 

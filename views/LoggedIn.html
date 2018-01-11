@@ -8,8 +8,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="/jquery-3.2.1.js"></script>
-<script src="/public/javascript/UploadImageHandler.js"></script>
+<script src="/public/javascript/UploadImageHandler.js"></script>v
 <script src="/public/javascript/LoadUserImages.js"></script>
+<style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
 <body class="light-grey content" style="max-width:1600px">
 <div id="app">
 <!-- Sidebar/menu -->
@@ -25,8 +28,8 @@
         <h4><button type="submit" v-on:click="GoogleLogout" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Logout</button></h4>
     </div>
     <div class="bar-block">
-        <a href="#portfolio" class="bar-item button padding text-teal" ><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
-        <a href="#upload" class="bar-item button padding" id="openuploadsection"><i class="fa fa-upload fa-fw margin-right"></i>UPLOAD</a>
+        <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
+        <a href="#upload" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>UPLOAD</a>
     </div>
     <div class="panel large">
         <i class="fa fa-facebook-official hover-opacity"></i>
@@ -72,8 +75,8 @@
     </div>
     
        <!-- Upload Image -->
-        <div class="container padding-large grey" id="uploadsection">
-            <h4 id="upload"><b>Upload Image</b><i class="fa fa-times right button" aria-hidden="true" id="closeuploadsection"></i></h4>
+        <div class="container padding-large grey">
+            <h4 id="upload"><b>Upload Image</b></h4>
             <hr class="opacity">
             <form id="imageUploadForm" method="POST" enctype="multipart/form-data">
                 <div class="section">
@@ -192,15 +195,5 @@
         }
     })
 
-</script>
-
-<script>
- $("#uploadsection").hide();
- $("#openuploadsection").click(function(){
-     $("#uploadsection").show();
- });
- $("#closeuploadsection").click(function(){
-    $("#uploadsection").hide();
-});
 </script>
 
