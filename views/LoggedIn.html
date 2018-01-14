@@ -54,9 +54,9 @@
             <h1><b>My Portfolio</b></h1>
             <div class="section bottombar padding-16">
                 <span class="margin-right">Filter:</span>
-                <button class="button black">My Images</button>
-                <button class="button white"><i class="fa fa-diamond margin-right"></i>Recent</button>
-                <button class="button white hide-small"><i class="fa fa-photo margin-right"></i>Popular</button>
+                <button class="button black" v-on:click="getMyImages">My Images</button>
+                <button class="button white" v-on:click="getRecentImages"><i class="fa fa-diamond margin-right"></i>Recent</button>
+                <button class="button white hide-small" v-on:click="getPopularImages"><i class="fa fa-photo margin-right"></i>Popular</button>
                 <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Categories</button>
             </div>
         </div>
@@ -189,11 +189,8 @@
                         self.profilPicUrl = result.image;
                         }
                     });
-                $.getJSON(window.location.origin + "/images/filter/user/all", function(result){ 
-                    self.imagelist = result;
-                });
+                this.getMyImages();
             },
-
             wt_open: function() {
                 document.getElementById("mySidebar").style.display = "block";
                 document.getElementById("myOverlay").style.display = "block";
@@ -204,7 +201,25 @@
             },
             GoogleLogout: function(){
                 window.location = window.location.origin + "/auth/logout";
-            }
+            },
+            getMyImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/user/all", function(result){ 
+                    self.imagelist = result;
+                });
+            },
+            getRecentImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/newest", function(result){ 
+                    self.imagelist = result;
+                });
+            },
+            getPopularImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/popular", function(result){ 
+                    self.imagelist = result;
+                });
+            },
         }
     })
 
