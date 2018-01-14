@@ -30,6 +30,51 @@ a:active, a:hover {
     outline-width: 0
 }
 
+ul {
+    display: inline;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination{
+    text-align: center;
+
+}
+
+.paginate-list {
+    width: 159px;
+    margin: 0 auto;
+    text-align: left;
+}
+.paginate-list li {
+      display: block;
+}
+.paginate-list li:before {
+        content: '⚬ ';
+        font-weight: bold;
+        color: slategray;
+      }
+
+.paginate-links.imagelist{
+    user-select: none;
+    display: inline-flex;
+    align-content: center;
+}
+    .paginate-links.imagelist a{
+      cursor: pointer;
+    }
+    .paginate-links.imagelist li.active a {
+      font-weight: bold;
+    }
+    .paginate-links.imagelist li.next:before {
+      content: ' | ';
+      margin-right: 13px;
+      color: #ddd;
+    }
+    .paginate-links.imagelist li.disabled a {
+      color: #ccc;
+      cursor: no-drop;
+    }
 
 img {
     border-style: none
