@@ -64,7 +64,8 @@
 
     <!-- Container that holds all images -->
     <div class="row-padding">
-        <div class="third container margin-bottom" v-for="entry in imagelist">
+        <paginate name="imagelist" :list="imagelist" :per="6">
+            <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
                 <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
                 <div class="container white" style="max-width:350px">
                     <p>
@@ -73,7 +74,9 @@
                     <p>{{ entry.description }}</p>
                 </div>
             </div>
+        </paginate>
     </div>
+    <paginate-links for="imagelist" :limit="3"></paginate-links>
 
        <!-- Upload Image -->
         <div class="container padding-large grey">
@@ -162,6 +165,7 @@
 
 <script src="/public/javascript/jquery/jquery.js"></script>
 <script src="/public/javascript/vue.js"></script>
+<script src="/public/javascript/vue-paginate.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -169,6 +173,7 @@
             profilName: '',
             profilPicUrl: '',
             imagelist : '',
+            paginate: ['imagelist']
         },
         created: function(){
             this.fetchData()
