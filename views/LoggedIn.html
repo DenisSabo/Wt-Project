@@ -8,8 +8,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="/jquery-3.2.1.js"></script>
-<script src="/public/javascript/UploadImageHandler.js"></script>v
-<script src="/public/javascript/LoadUserImages.js"></script>
+<script src="/public/javascript/UploadImageHandler.js"></script>
 <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
@@ -64,16 +63,18 @@
     </header>
 
     <!-- Container that holds all images -->
-    <div id="parentOfImages">
-        <!-- ´WILL BE ADDED DYNAMICALLY: LoadUserImages.js -->
+    <div class="row-padding">
+        <div class="third container margin-bottom" v-for="entry in imagelist">
+                <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                <div class="container white" style="max-width:350px">
+                    <p>
+                        <b>{{ entry.title }}</b>
+                    </p>
+                    <p>{{ entry.description }}</p>
+                </div>
+            </div>
     </div>
 
-    <div class="center padding-32">
-        <div class="bar" id="numberOfPages">
-            <!-- PAGE NUMBERS WILL BE ADDED DYNAMICALLY: LoadUserImages.js-->
-        </div>
-    </div>
-    
        <!-- Upload Image -->
         <div class="container padding-large grey">
             <h4 id="upload"><b>Upload Image</b></h4>
@@ -167,6 +168,7 @@
         data: {
             profilName: '',
             profilPicUrl: '',
+            imagelist : '',
         },
         created: function(){
             this.fetchData()
@@ -180,7 +182,11 @@
                         self.profilPicUrl = result.image;
                         }
                     });
-                },
+                $.getJSON(window.location.origin + "/images/filter/user/all", function(result){ 
+                    self.imagelist = result;
+                });
+            },
+
             wt_open: function() {
                 document.getElementById("mySidebar").style.display = "block";
                 document.getElementById("myOverlay").style.display = "block";
