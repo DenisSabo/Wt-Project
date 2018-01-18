@@ -40,8 +40,16 @@ exports.image_create_post = function(req, res) {
 	//trying to insert into db. Validation happens in model. (Mongoose validation)
 	insertImage(image, function(err){
 		if(err){
-		errorHandler.clientErrorHandling(404, err, res);
-		console.log("WARNING: Image was not safed to database. PLEASE CHECK IF IMAGE WAS SAFED IN /uploads.");
+			//delete uploaded image from filesystem, because image was not safed to database (Reasons could be: Not passed mongoose validation)
+			fs.unlink(image.path, function(err2){
+				if(err2){
+					errorHandler.clientErrorHandling(500, err + " | " + err2, res);
+					console.log("WARNING: Image was not safed to database BUT UPLOADED. Check directory '/uploads'.");
+				}
+			})
+
+			//handle error
+			errorHandler.clientErrorHandling(404, err, res);
 		}
 	});
 
