@@ -55,24 +55,22 @@ var ImageModelSchema = new Schema({
 	}
 });
 
-/* MORE VALIDATION ... YEAH! */
-ImageModelSchema.path('categories').validate(function (value) {
-	if(value.length > 3){
-		return false
-	}
-	else 
-		return true;
-}, 'Not more than 3 categories allowed'); 
+/* Check categories. Same as ENUM. Could be implemented as foreign key in a schema called categories ... */
+ImageSchema.path('categories').validate(function (value) {
 
-/* 
-ImageModelSchema.path('author').validate(function (value) {
-	if(value === "undefined" || value === "null"){
-		return false
+	if(value[0] !== "non-photographic" && value[0] !== "photographic" && value[0] !== "else"){
+		return false;
 	}
-	else 
+	else if(value[1] !== "nature" && value[1] !== "urban" && value[1] !== "people" && value[1] !== "else"){
+		return false;
+	}
+	else if(value[2] !== "science" && value[2] !== "technology" && value[2] !== "entertainment" && value[2] !== "else"){
+		return false;
+	}
+	else{
 		return true;
-}, 'Author cannot be undefined or null'); 
-*/
+	}
+}, 'Invalid categories!'); 
 
 
 								//Collection  //Schema that will be used for creating the model
