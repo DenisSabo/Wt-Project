@@ -105,9 +105,33 @@
                         <input class="input border" type="text" name="tags" id="tags" placeholder="Tag1 Tag2 Tag3 ...">
             </div>
             <div class="section">
-                        <label for="tags"> Assign one ore more categories two your picture</label>
-                        <input class="input border" type="text" name="categories" id="categories"
-                               placeholder="Category1 Category2 ...">
+                <fieldset>
+                    <legend>Choose categories to specify your image</legend>
+                    <fieldset>
+                        <input type="radio" id="photographic" name="photographic" value="photographic">
+                        <label for="photographic">Photographic</label> 
+                        <input type="radio" id="non_photographic" name="photographic" value="non_photographic">
+                        <label for="non_photographic">Non-photographic</label>
+                        </fieldset>
+
+                    <fieldset>
+                        <input type="radio" id="people" name="classification1" value="people">
+                        <label for="people">People</label> 
+                        <input type="radio" id="nature" name="classification1" value="nature">
+                        <label for="nature">Nature</label> 
+                        <input type="radio" id="urban" name="classification1" value="urban">
+                        <label for="urban">Urban</label> 
+                    </fieldset>
+
+                <fieldset>
+                    <input type="radio" id="science" name="classification2" value="science">
+                        <label for="science">Science</label> 
+                        <input type="radio" id="tech" name="classification2" value="tech">
+                        <label for="tech">Technology</label> 
+                        <input type="radio" id="entertainment" name="classification2" value="entertainment">
+                        <label for="entertainment">Entertainment</label> 
+                    </fieldset> 
+                </fieldset>
             </div>
             <div class="section">
                         <label for="pic"> Search for an image on your computer </label>
