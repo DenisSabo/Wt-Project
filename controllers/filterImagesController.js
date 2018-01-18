@@ -72,3 +72,6 @@ exports.image_place_list = function(req, res) {
 	res.send('NOT IMPLEMENTED: Images taken in one place');
 };
 
+exports.image_all = function(req, res){
+	res.send('NOT IMPLEMENTED: All Images');
+};
