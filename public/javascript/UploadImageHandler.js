@@ -90,7 +90,7 @@ function getValuesCheckbox(){
 	if($('#photographic').is(":checked")){
  		 categories.push("photographic"); 
 	}
-	else if($('#non-photographic').is(":checked")){
+	else if($('#non_photographic').is(":checked")){
 		categories.push("non-photographic"); 
 	}
 	else{
