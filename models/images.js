@@ -52,7 +52,11 @@ var ImageModelSchema = new Schema({
 		required: [true, "Image type is missing!"],
 		//you can add more image types here!
 		enum: ['png', 'jpg', 'jpeg','gif']
-	}
+	},
+	uploadTime: {
+        type: Date,
+        default: Date.now
+      }
 });
 
 /* Check categories. Same as ENUM. Could be implemented as foreign key in a schema called categories ... */
