@@ -1,37 +1,11 @@
 var Image = require('../models/images.js');
 
+//maybe we can/should put filterImagesController and manageImagesController together?
 
-//Get images, sorted by date/uploadTime (newest at first) (but all at once)
+//Display image of all images, sorted by date (newest at first)
 exports.image_recent_list = function(req, res) {
-	var images = Image.find({}, function(err, images){
-		if(err){
-			res.status(500).end("A unknown error occured");
-		}
-		else{
-			res.status(200).json(images).end();
-		}
-		//sorts elements by uploadTime ...
-	}).sort({uploadTime:-1});
+	res.send('NOT IMPLEMENTED: Recent images list');
 };
-
-
-//Get images, sorted by date/uploadTime (newest at first) (only for one page)
-exports.image_recent_list_page = function(req, res) {
-	var pageNumber = req.body.pageNumber;
-	pageNumber--;
-
-	var images = Image.find({}, function(err, images){
-		if(err){
-			res.status(500).end("A unknown error occured");
-		}
-		else{
-			res.status(200).json(images).end();
-		}
-		//sorts elements by uploadTime ...
-	}).skip(pageNumber * 9).limit(9).sort({uploadTime:-1});
-};
-
-
 
 //Displays all images of one specific user/author
 exports.image_user_list = function(req, res) {
@@ -44,27 +18,30 @@ exports.image_user_list = function(req, res) {
 		if(err){
 			console.log(err);
 			res.status(500).send("Something went wrong: %s", err).end();
+			return false;
 		}
 		else{
 			console.log("The image object looks like this %s", image);
-			res.status(200).json(image).end();
+			res.status(201).json(image).end();
 		}
 	});
+
+	
+
 };
 
-
-
-//Gets and sends images of specific category
+//Displays images of one category, sorted by popularity or recent uploads?!?
 exports.image_category_list = function(req, res) {
 	res.send('NOT IMPLEMENTED: Images of one category');
 };
 
-//gets images, sorted by popularity level 
+//Displays images sorted by popularity (Clicks + likes)
 exports.image_popular_list = function(req, res) {
 	Image.find({}, function(err, image){
 		if(err){
 			console.log(err);
 			res.status(500).send("Something went wrong: %s", err).end();
+			return false;
 		}
 		else{
 			/** BUBBLESORT */
@@ -85,7 +62,7 @@ exports.image_popular_list = function(req, res) {
 			}
 
 			console.log("Sorted array of objects %s", image);
-			res.status(200).json(image).end();
+			res.status(201).json(image).end();
 		}
 	})
 };
@@ -95,7 +72,6 @@ exports.image_place_list = function(req, res) {
 	res.send('NOT IMPLEMENTED: Images taken in one place');
 };
 
-//all images at one time (problematic)
 exports.image_all = function(req, res){
 	Image.find({}, function(err, image){
 		if(err){
@@ -170,4 +146,3 @@ exports.image_popular_list_page = function(req, res){
 		}).skip(pageNumber * 9).limit(9);
 	}
 };
-
