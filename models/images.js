@@ -43,10 +43,6 @@ var ImageSchema = new Schema({
 		type : Number,
 		default : 0
 	},
-	date: { //Timestamp, client side (What if user is from another country)
-		type : Date, 
-		required: [true, "Date of image upload required!"]
-	},
 	imageType: {
 		type: String,
 		required: [true, "Image type is missing!"],
@@ -55,7 +51,7 @@ var ImageSchema = new Schema({
 	},
 	uploadTime: {
         type: Date,
-        default: Date.now
+        default: Date.now,
       }
 });
 

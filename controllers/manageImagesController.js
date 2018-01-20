@@ -4,56 +4,70 @@ var errorHandler = require("./services/errorHandlingService.js");
 
 // Save image to server in "/uploads/"
 exports.image_create_post = function(req, res) {
-	//TODO no upload if invalid fileFilter()
-	//TODO return does not work
 
-	console.log("manageImagesController/image_create_post: " + req);
+	console.log("manageImagesController/image_create_post: ");
 
-	//checkRequestType(req.get("Content-Type"), function(err){
-	//	if(err){
-	//		errorHandler.clientErrorHandling(406, err, res);
-	//		return false; //returns from image_create_post
-	//	}
-	//});
+	var oldPath = req.file.path;
 	var fileEnding =  getMimeTypeEnding(req.file.mimetype); //needed in renameUploadedFile and in var image
+	var timestamp = Date.now(); 
+	var newPath = "uploads/" + req.user.id + '_' + req.body.title + '_' + timestamp + '.' + fileEnding;
+	var categories = req.body.categories;
+	var result = categories.split(","); 
 
-	var newPath = generateNewPath(req, fileEnding, function(err){
-		if(err){
-			var err = "Internal Server Error: Renaming file failed.";
-			errorHandler.clientErrorHandling(500, err, res);
-			//Return does not work here
-		}
-	});
-	
 	var image = {
 		title : req.body.title,
 		user : req.user.id, //works for google authentification
 		description : req.body.description,
 		tags : req.body.tags,
-		categories : req.body.categories,
+		categories : result,
 		place : req.body.place,
 		path : newPath,
-		timestamp : req.body.date,
 		fileType : fileEnding
 	}
 
 	//trying to insert into db. Validation happens in model. (Mongoose validation)
 	insertImage(image, function(err){
 		if(err){
-			//delete uploaded image from filesystem, because image was not safed to database (Reasons could be: Not passed mongoose validation)
-			fs.unlink(image.path, function(err2){
-				if(err2){
-					errorHandler.clientErrorHandling(500, err + " | " + err2, res);
-					console.log("WARNING: Image was not safed to database BUT UPLOADED. Check directory '/uploads'.");
+			//Image was not safed to database
+			console.log(err);
+			fs.unlink(oldPath, function(err){
+				if(err){
+					console.log(err);
+					//Should not happen
+					console.log("WARNING: Useless image was not deleted from filesystem: " + oldPath);
+				}
+				else{
+					//Uploaded file was deleted from filesystem
+					console.log("Uploaded file was deleted from filesystem");
+					res.status(404).end("Invalid data: " + err);
 				}
 			})
-
-			//handle error
-			errorHandler.clientErrorHandling(404, err, res);
+			
+		}
+		else{
+			fs.rename(oldPath, newPath, function(err){
+				if(err){
+					fs.unlink(oldPath, function(err){
+						if(err){
+							console.log("WARNING: Useless image was not deleted from filesystem: " + oldPath);
+							res.status(500).end(err);
+						}
+						else{
+							console.log("Error occured while renaming file");
+							res.status(500).end(err);
+						}
+					})
+					
+				}
+				else{
+					//File was successfully safed to database and uploaded
+					console.log("File was uploaded successfully");
+					res.status(201).end("File was created successfully");
+				}
+			});
 		}
 	});
 
-	res.status(200).end("Image was uploaded and safed to database");
 
 };
 
@@ -70,7 +84,6 @@ exports.image_change_put = function(req, res) {
 	res.send('NOT IMPLEMENTED: Image change on update');
 };
 
-/* TODO : Eigene Funktionen für die Queries erstellen!!! */
 
 /* Functions for validation */
 function validateType(mimeType){
@@ -108,55 +121,22 @@ function getMimeTypeEnding(mimetype){
 function insertImage(image, callback){
 	try{
 	var image_instance = new Image({ title : image.title, user: image.user, description: image.description, tags: image.tags, categories : 
-		image.categories, place : image.place, path : image.path, date : image.timestamp, imageType : image.fileType});
+		image.categories, place : image.place, path : image.path, imageType : image.fileType});
 	}catch(err){
 		//callback will be called with error message in parameter
 		callback(err);
 	}
 
 	// Save the new model instance, passing a callback
-        image_instance.save(function (err) {
-        	//err = error messages defined in Schema of image (root/models/image.js)
-              if (err) {
-                  callback(err);
-              	}
-			  else{
-                  console.log("Author/User '" + image.user + "' safed a image called '" + image.title + "' to our site.");
-              	}
-        });
-}
-
-function checkRequestType(requestType, callback){
-	//jQuery sets datatype to urlencoded, forcing it to set Contet-Type to multipart/form-data leads to errors, eventhough it is the right thing
-	if(requestType !== "application/x-www-form-urlencoded"){
-		var err = "Invalid Content-Type. Only 'application/x-www-form-urlencoded' allowed.";
-		callback(err);
-	}
-	else{
-		callback(null);
-	}
-
-}
-
-function generateNewPath(request, fileEnding, callback){
-		/* COLLECT DATA */
-		try{
-			var oldPath = request.file.path; //path to which file was uploaded
-			//rename file
-			//idea : unique name for image = timestamp + username + title
-			var timestamp = Date.now(); 
-			var newPath = "uploads/" + request.user.id + '_' + request.body.title + '_' + timestamp + '.' + fileEnding;
-
-			fs.rename(oldPath, newPath, function(err){
-				if(err){
-					callback(err);
-				}
-			});
-
-			return newPath;
-		}
-		catch(err){
-			err += "WARNING: unknown error";
-			callback(err);
-		}
+    image_instance.save(function (err) {
+        //err = error messages defined in Schema of image (root/models/image.js)
+        if (err) {
+            callback(err);
+        }
+		else{
+            console.log("Author/User '" + image.user + "' safed a image called '" + 
+            	image.title + "' to our database.");
+            callback(0);
+        }
+    });
 }
