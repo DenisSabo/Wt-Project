@@ -36,8 +36,8 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // routes
-var indexRoute = require('./lib/index');
-var oauth2Route = require('./lib/oauth2');
+var indexRoute = require('./routes/index');
+var oauth2Route = require('./models/oauth2');
 var getAccountAPIRoute = require('./routes/getAccountAPI');
 
 //more routes

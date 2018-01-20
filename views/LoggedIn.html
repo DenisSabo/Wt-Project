@@ -7,8 +7,7 @@
 <link rel="stylesheet" href="/public/stylesheets/main.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="/jquery-3.2.1.js"></script>
-<script src="/public/javascript/UploadImageHandler.js"></script>
+<link rel="stylesheet" href="/public/stylesheets/jquery.fancybox.css">
 <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
@@ -29,14 +28,6 @@
     <div class="bar-block">
         <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
         <a href="#upload" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>UPLOAD</a>
-    </div>
-    <div class="panel large">
-        <i class="fa fa-facebook-official hover-opacity"></i>
-        <i class="fa fa-instagram hover-opacity"></i>
-        <i class="fa fa-snapchat hover-opacity"></i>
-        <i class="fa fa-pinterest-p hover-opacity"></i>
-        <i class="fa fa-twitter hover-opacity"></i>
-        <i class="fa fa-linkedin hover-opacity"></i>
     </div>
 </nav>
 
@@ -66,7 +57,9 @@
     <div class="row-padding">
         <paginate name="imagelist" :list="imagelist" :per="6">
             <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
-                <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                <a class="fancybox" rel="group" :href="entry.path">
+                    <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                </a>
                 <div class="container white" style="max-width:350px">
                     <p>
                         <b>{{ entry.title }}</b>
@@ -168,14 +161,7 @@
             </div>
 
             <div class="third">
-                <h3>POPULAR TAGS</h3>
-                <p>
-                    <span class="tag black margin-bottom">Travel</span> <span class="tag grey small margin-bottom">New York</span> <span class="tag grey small margin-bottom">London</span>
-                    <span class="tag grey small margin-bottom">IKEA</span> <span class="tag grey small margin-bottom">NORWAY</span> <span class="tag grey small margin-bottom">DIY</span>
-                    <span class="tag grey small margin-bottom">Ideas</span> <span class="tag grey small margin-bottom">Baby</span> <span class="tag grey small margin-bottom">Family</span>
-                    <span class="tag grey small margin-bottom">News</span> <span class="tag grey small margin-bottom">Clothing</span> <span class="tag grey small margin-bottom">Shopping</span>
-                    <span class="tag grey small margin-bottom">Sports</span> <span class="tag grey small margin-bottom">Games</span>
-                </p>
+                
             </div>
 
         </div>
@@ -190,9 +176,15 @@
 </html>
 
 <script src="/public/javascript/jquery/jquery.js"></script>
+<script src="/public/javascript/UploadImageHandler.js"></script>
+<script src="/public/javascript/jquery.fancybox.js"></script>
 <script src="/public/javascript/vue.js"></script>
 <script src="/public/javascript/vue-paginate.js"></script>
 <script>
+    $(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+
     new Vue({
         el: '#app',
         data: {
