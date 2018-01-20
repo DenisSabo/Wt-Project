@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 //Define a schema
 var Schema = mongoose.Schema;
 
-var ImageModelSchema = new Schema({
+var ImageSchema = new Schema({
 	title: { 
 		type: String, 
 		minlength: [3, "Title has to contain at least 3 characters!"],
@@ -78,4 +78,4 @@ ImageSchema.path('categories').validate(function (value) {
 
 
 								//Collection  //Schema that will be used for creating the model
-module.exports = mongoose.model("ImageModel", ImageModelSchema);
+module.exports = mongoose.model("ImageModel", ImageSchema);
