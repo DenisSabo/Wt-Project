@@ -47,13 +47,26 @@ ul {
     text-align: left;
 }
 .paginate-list li {
-      display: block;
+    padding: 8px 16px;
+    float: left;
+    width: auto;
+    border: none;
+    outline: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap
 }
 .paginate-list li:before {
         content: '⚬ ';
         font-weight: bold;
         color: slategray;
       }
+
+.paginate-links.imagelist li{
+    padding: 8px 16px;
+    cursor: pointer;
+}
 
 .paginate-links.imagelist{
     user-select: none;
@@ -63,8 +76,14 @@ ul {
     .paginate-links.imagelist a{
       cursor: pointer;
     }
+
+    .paginate-links.imagelist li.active{
+        background-color: #000;
+      }
+
     .paginate-links.imagelist li.active a {
       font-weight: bold;
+      color: #fff
     }
     .paginate-links.imagelist li.next:before {
       content: ' | ';
