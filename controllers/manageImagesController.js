@@ -1,6 +1,5 @@
 var Image = require('../models/images.js');
 var fs = require("fs");
-var errorHandler = require("./services/errorHandlingService.js");
 
 // Save image to server in "/uploads/"
 exports.image_create_post = function(req, res) {
