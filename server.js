@@ -43,6 +43,7 @@ var getAccountAPIRoute = require('./routes/getAccountAPI');
 //more routes
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
+var manageUsers = require("./routes/manageUsers.js");
 var basicAuth = require("./routes/basicAuth.js");
 
 var app = express();
@@ -84,7 +85,7 @@ app.use("/getAccount", getAccountAPIRoute);
 /* ROUTER FOR HANDLING IMAGES */
 
 
-
+app.use('/users/manage', manageUsers);
 app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
 
 /* ADD COMMENT , jsonParser, upload.single()*/

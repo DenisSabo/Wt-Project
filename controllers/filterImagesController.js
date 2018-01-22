@@ -17,8 +17,7 @@ exports.image_user_list = function(req, res) {
 	Image.find({ 'user': googleUserID }, function(err, image){
 		if(err){
 			console.log(err);
-			res.status(500).send("Something went wrong: %s", err).end();
-			return false;
+			res.status(500).end("Something went wrong: %s", err);
 		}
 		else{
 			console.log("The image object looks like this %s", image);
@@ -50,8 +49,8 @@ exports.image_popular_list = function(req, res) {
 				//compare image[i] and next image[i+1]
 				for(var i = 0; i < (image.length - 1 - x); i++){ //x is the limit of the right side. After each iteration the limit moves from the right side, on element down to the left side
 					//sort images by popularity
-					var popularityLevel = image[i].clicks + (image[i].likes * 5); // likes are more important than clicks, so other weighting
-					var popularityLevelNext = image[i+1].clicks + (image[i + 1].likes * 5);
+					var popularityLevel = image[i].clicks;
+					var popularityLevelNext = image[i+1].clicks;
 					if(popularityLevelNext > popularityLevel){
 						//exchange: most popular will be in front
 						var cache = image[i]; 

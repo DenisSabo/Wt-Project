@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	//attack click event to button with id 'uploadImage'
 	$("#imageUploadForm").submit(function( event ){
-		event.preventDefault(); //cancels submit action calling
+		//disables button, until upload was successfull or upload fails ...
+		$("#uploadImage").attr('disabled','disabled');
+
+		//cancels submit action calling
+		event.preventDefault(); 
 
 		/* COLLECT ALL DATA OF FORM IN VARIABLES */
 		var title = $("input[name=title]").val(), author = $("input[name=author]").val(), description = $("input[name=description]").val(), 
@@ -42,11 +46,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		})
 		.done(function( msg ){
 			alert(msg + " String data was send to server");
-			//reload page so client gets new image as well
+			//reload page so client can see uploaded images directly
 			location.reload();
+			//enables disabled upload button.
+			$("#uploadImage").removeAttr('disabled');
 		})
 		.fail(function( jqXHR, textStatus ){
 			alert( "Request failed: " + textStatus );
+			$("#uploadImage").removeAttr('disabled');
 		});
 		
 	});

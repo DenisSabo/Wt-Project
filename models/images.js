@@ -9,14 +9,13 @@ var ImageSchema = new Schema({
 		type: String, 
 		minlength: [3, "Title has to contain at least 3 characters!"],
 		maxlength: [15, "Title cannot be longer than 15 characters!"],
-		required: [true, "Title of image is missing!"] 
+		required: [true, "Title of image is missing!"]
 	}, 
-	//TODO add as foreign key to ./author.js
-	user: { 
-		type: String,
-		minlength: [3, "User name has to contain at least 3 characters!"], 
-		maxlength: [40, "User name cannot be longer than 20 characters!"],
-		required: [true, "User is missing!"] 
+	//Foreign key to ./users.js
+	user: {
+		type: Schema.Types.ObjectId,
+		ref: ['User', "User does not exist"],
+		required: true
 	},
 	description: {
 		type: String,
@@ -24,7 +23,7 @@ var ImageSchema = new Schema({
 	},
 	//Used for searching later (Tags + title + maybe: categories)
 	tags: [String], 
-	categories: [String], 
+	categories: [String],
 	//Where was the picture shot? (Country, City, point of interest, whatever)
 	place: { 	
 		type: String,
@@ -33,13 +32,10 @@ var ImageSchema = new Schema({
 	},
 	path: {
 		type : String,
-		required: [true, "Path to picture's destination is missing!"]
+		required: [true, "Path to picture's destination is missing!"],
+		unique: true
 	},
 	clicks: {
-		type : Number,
-		default : 0
-	},
-	likes: {
 		type : Number,
 		default : 0
 	},

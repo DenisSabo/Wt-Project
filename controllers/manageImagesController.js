@@ -15,7 +15,7 @@ exports.image_create_post = function(req, res) {
 
 	var image = {
 		title : req.body.title,
-		user : req.user.id, //works for google authentification
+		user : req.body.objectid, //works for google authentification
 		description : req.body.description,
 		tags : req.body.tags,
 		categories : result,
@@ -29,6 +29,7 @@ exports.image_create_post = function(req, res) {
 		if(err){
 			//Image was not safed to database
 			console.log(err);
+			//File will be deleted (Uploaded instantly by multer)
 			fs.unlink(oldPath, function(err){
 				if(err){
 					console.log(err);
@@ -71,16 +72,64 @@ exports.image_create_post = function(req, res) {
 };
 
 //Handle image delete on delete
+//Route: /images/manage/
+//Method: delete
+//Data: req.params.path (/images/manage/:path) must contain path to image, that has to be deleted
 exports.image_delete_delete = function(req, res) {
-	console.log("manageImagesController/image_delete_delete: " + req);
-	res.send('NOT IMPLEMENTED: Image delete on delete');
+	var path = req.params.path;
+	if(path === null || path === undefined){
+		console.log("Req.body.path is needed.");
+		res.status(404).end("Req.body.path is needed.");
+	}
+	else{
+		Image.remove( { path: path }, function(err){
+		if(err){
+			res.status(404).end("Image not deleted: " + err + "; " + req.body.path);
+		}
+		else{
+			fs.unlink(path, function(err){
+				//deletes file from filesystem 
+				if(err){
+					res.status(500).end("Image was not deleted from filesystem. Please check in filesystem: " + req.body.path);
+				}
+				else{
+					res.status(204).end("Image was deleted successfully");
+				}
+			});
+			console.log("Image deleted: " + req.body.path);
+			res.status(204).end("Image deleted: " + req.body.path);
+		}
+	});
+	}
+	
 };
 
+//Handles image changes on put (for example new title, or description)
+//Route: /images/manage/clicked/:id
+//Method: put
+exports.image_increment_clicks = function(req, res) {
+	var objectID = req.params.id;	
+	if(objectID === null || objectID === undefined){
+		console.log("/images/manage/clicked/:id; id is empty. Send images objectid");
+		res.status(404).end("/images/manage/clicked/:id; id is empty. Send images objectid");
+	}
+	else{
+		Image.update({_id: objectID }, { clicks: clicks++ }, function(err, image){
+			if(err){
+				console.log("Error occured while trying to increment clicks" + err);
+				res.status(404).end("Image does not exist. Clicks not incremented: " + err);
+			}
+			else{
+				console.log("Image clicks are now: " + image.clicks);
+				res.status(200).end("Clicks incremented");
+			}
+		})
+	}
+};
 
 //Handles image changes on put (for example new title, or description)
 exports.image_change_put = function(req, res) {
-	console.log("manageImagesController/image_change_put: " + req);
-	res.send('NOT IMPLEMENTED: Image change on update');
+
 };
 
 
