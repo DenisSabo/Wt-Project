@@ -69,7 +69,7 @@
             </div>
         </paginate>
     </div>
-    <div class="pagination">  
+    <div class="pagination" v-if="imagelist.length > 6">  
         <paginate-links for="imagelist" :limit="3"></paginate-links>
     </div>
 
