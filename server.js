@@ -44,7 +44,6 @@ var getAccountAPIRoute = require('./routes/getAccountAPI');
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
 var manageUsers = require("./routes/manageUsers.js");
-var basicAuth = require("./routes/basicAuth.js");
 
 var app = express();
 
@@ -93,10 +92,6 @@ app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/d
 // multipart/form-data
 app.use("/images/manage", upload.single("file"));
 app.use('/images/manage', manageImages);
-
-//Router "signupOrLogin.js" redirects requests to AuthController.js
-app.use("/login", basicAuth);
-app.use("/signup", basicAuth);
 
 //serves jQuery framework in directory root/lib (for frontend)
 app.get("/jquery-3.2.1.js", function(req, res){
