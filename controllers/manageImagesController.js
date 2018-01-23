@@ -40,6 +40,7 @@ exports.image_create_post = function(req, res) {
 			//trying to insert into db. Validation happens in model. (Mongoose validation)
 			insertImage(image, function(err){
 				if(err){
+					var thisError = err;
 					//Image was not safed to database
 					console.log(err);
 					//File will be deleted (Uploaded instantly by multer)
@@ -52,7 +53,9 @@ exports.image_create_post = function(req, res) {
 						else{
 							//Uploaded file was deleted from filesystem
 							console.log("Uploaded file was deleted from filesystem");
-							res.status(404).end("Invalid data: " + err);
+							
+							if(thisError.errors.title) res.status(406).send(thisError.errors.title.message);
+							else res.status(500).end("something broke");
 						}
 					})
 			
