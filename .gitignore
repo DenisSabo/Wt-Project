@@ -13,7 +13,6 @@ yarn-error.log*
 config/default.json
 
 #Pictures
-*.png
 
 #IDEA IDE
 .idea/
