@@ -148,7 +148,14 @@
 <script src="/public/javascript/vue-paginate.js"></script>
 <script>
     $(document).ready(function() {
-		$(".fancybox").fancybox();
+        $(".fancybox").fancybox();
+        $(".number a").click(function(){
+            console.log('scroll to destination');
+
+            $('html, body').animate({
+                scrollTop: $($("#galery")).offset().top + "px"
+                }, 1000);
+        });
 	});
 
     new Vue({
