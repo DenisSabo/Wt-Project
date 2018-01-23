@@ -19,9 +19,13 @@
         <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-     </div>
-    <div class="bar-block" id="login">
-        <h4><button type="submit" v-on:click="GoogleRedirect" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
+        <img src="/public/pictures/guest.png" style="width:40%;" class="round"><br><br>
+    </div>
+    <div class="bar-block">
+        <h4><button type="submit" v-on:click="GoogleRedirectLogin" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
+    </div>   
+    <div class="bar-block">
+        <h4><button type="submit" v-on:click="GoogleRedirectRegister" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw"></i>&nbsp;&nbsp;&nbsp;Get an Account</button></h4>
     </div>
 </nav>
 
@@ -79,24 +83,12 @@
                 document.getElementById("mySidebar").style.display = "none";
                 document.getElementById("myOverlay").style.display = "none";
             },
-            GoogleRedirect: function() {
+            GoogleRedirectLogin: function() {
                 window.location = window.location.origin + "/auth/login";
+            },
+            GoogleRedirectRegister: function() {
+                window.location = "https://accounts.google.com/SignUp";
             }
         }
     })
-</script>
-
-<script>
-    // Script to change between SignIn and SignUp
-    
-        $("#register").hide();
-    $("#signin").click(function(){
-        $("#register").hide();
-        $("#login").show();
-    });
-    $("#signup").click(function(){
-        $("#login").hide();
-        $("#register").show();
-    });
-    
 </script>
