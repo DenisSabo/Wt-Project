@@ -14,14 +14,14 @@ exports.image_user_list = function(req, res) {
 	console.log(googleUserID);
 
 	//mongoose query for getting all images of one specific user in one array
-	Image.find({ 'user': googleUserID }, function(err, image){
+	Image.find({ 'googleUserId': googleUserID }, function(err, images){
 		if(err){
 			console.log(err);
 			res.status(500).end("Something went wrong: %s", err);
 		}
 		else{
-			console.log("The image object looks like this %s", image);
-			res.status(201).json(image).end();
+			console.log("The images object looks like this %s", images);
+			res.status(201).json(images).end();
 		}
 	});
 
