@@ -12,13 +12,6 @@ var UserSchema = new Schema({
 		maxlength: [30, "Username cannot be longer than 15 characters!"],
 		required: [true, "Username is missing!"] 
 	}, 
-	googleUserID: {
-		type: String, 
-		minlength: [3, "GoogleID too short! At least 3 characters needed."],
-		maxlength: [40, "GoogleID cannot be longer than 15 characters!"],
-		required: [true, "GoogleID is missing!"],
-		unique: [true, "User already exists!"]
-	},
 	googlePicture: {
 		type: String, 
 		minlength: [3, "Path too short! At least 3 characters needed."],
