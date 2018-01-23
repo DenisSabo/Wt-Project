@@ -58,7 +58,7 @@
         <paginate name="imagelist" :list="imagelist" :per="6">
             <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
                 <a class="fancybox" rel="group" :href="entry.path">
-                    <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                    <img v-bind:src="entry.path" v-bind:id="entry._id" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
                 </a>
                 <div class="container white" style="max-width:350px">
                     <p>
@@ -148,7 +148,19 @@
 <script src="/public/javascript/vue-paginate.js"></script>
 <script>
     $(document).ready(function() {
-        $(".fancybox").fancybox();
+        $(".fancybox").fancybox({
+            afterLoad: function(current, previous) {
+                var PicID = $(this.element).children().attr('id');
+                $.ajax({
+			        url: "/images/manage/clicked/" + PicID,
+                    method: "POST",
+                    success: function(){
+                        console.log("ajax request success");
+                    }
+                }) 
+		    }
+        });
+
         $(".number a").click(function(){
             console.log('scroll to destination');
 
