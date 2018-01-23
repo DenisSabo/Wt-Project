@@ -49,21 +49,24 @@
         </div>
     </header>
 
-    <div class="row-padding">
+    <div>
         <paginate name="imagelist" :list="imagelist" :per="6">
-            <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
-                <a class="fancybox" rel="group" :href="entry.path">
-                    <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
-                </a>
-                <div class="container white" style="max-width:350px">
-                    <p>
-                        <b>{{ entry.title }}</b>
-                    </p>
-                    <p>{{ entry.description }}</p>
+            <div class="row-padding" v-for="i in Math.ceil(imagelist.length / 3)">
+                <div class="third container margin-bottom" v-for="entry in paginated('imagelist').slice((i - 1) * 3, i * 3)">
+                    <a class="fancybox" rel="group" :href="entry.path">
+                        <img v-bind:src="entry.path" v-bind:id="entry._id" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                    </a>
+                    <div class="container white" style="max-width:350px">
+                        <p>
+                            <b>{{ entry.title }}</b>
+                        </p>
+                        <p>{{ entry.description }}</p>
+                    </div>
                 </div>
             </div>
         </paginate>
     </div>
+    
     <div class="pagination" v-if="imagelist.length > 6">  
         <paginate-links for="imagelist" :limit="3"></paginate-links>
     </div>
