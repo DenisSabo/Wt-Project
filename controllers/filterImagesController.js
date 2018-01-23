@@ -1,4 +1,5 @@
 var Image = require('../models/images.js');
+var User = require('../models/users.js');
 
 //maybe we can/should put filterImagesController and manageImagesController together?
 
@@ -9,24 +10,29 @@ exports.image_recent_list = function(req, res) {
 
 //Displays all images of one specific user/author
 exports.image_user_list = function(req, res) {
-	//for google authentification 
-	var googleUserID = req.user.id;
-	console.log(googleUserID);
 
-	//mongoose query for getting all images of one specific user in one array
-	Image.find({ 'googleUserId': googleUserID }, function(err, images){
-		if(err){
-			console.log(err);
-			res.status(500).end("Something went wrong: %s", err);
-		}
+	User.findOne({ 'googleUserId' : req.user.id}, function(err, user){
+		if(err) res.status(500).end("Something went wrong: %s", err);
 		else{
-			console.log("The images object looks like this %s", images);
-			res.status(201).json(images).end();
+			if(user){
+				console.log("User was found: " + user._id);
+				//mongoose query for getting all images of one specific user in one array
+				Image.find({ 'user': user._id }, function(err, images){
+					if(err){
+						console.log(err);
+						res.status(500).end("Something went wrong: %s", err);
+					}
+					else{
+						console.log("The images object looks like this %s", images);
+						res.status(201).json(images).end();
+					}
+				});
+			}
+			else{
+				res.status(404).end("This user does not exist");
+			}
 		}
-	});
-
-	
-
+	})
 };
 
 //Displays images of one category, sorted by popularity or recent uploads?!?
