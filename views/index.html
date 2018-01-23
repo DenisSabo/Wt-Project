@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-
-<title>Home/Login</title>
+<title>WT-Project</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/public/stylesheets/main.css">
@@ -36,29 +35,38 @@
 <div class="main" style="margin-left:300px">
 
     <!-- Header -->
-    <header id="Home">
+    <header id="galery">
         <a href="#"><img src="/public/pictures/guest.png" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
         <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
-            <h1><b>Home</b></h1>
+            <h1><b>Picture galery</b></h1>
             <div class="section bottombar padding-16">
                 <span class="margin-right">Filter:</span>
-                <button class="button black"><i class="fa fa-users margin-right"></i>ALL</button>
-                <button class="button white"><i class="fa fa-user-o margin-right"></i>Denis</button>
-                <button class="button white"><i class="fa fa-user-o margin-right"></i>Ludwig</button>
-                <button class="button white"><i class="fa fa-user-o margin-right"></i>Raphael</button>
-                <br>
-                <div class="section bottombar margin-top">
-                    <span class="margin-right">Tags:</span>
-                    <span class="tag grey small smargin-bottom">Travel</span> <span class="tag grey small margin-bottom">Ideas</span>
-                    <span class="tag grey small margin-bottom">Family</span> <span class="tag grey small margin-bottom">Clothing</span>
-                    <span class="tag grey small margin-bottom">Shopping</span> <span class="tag grey small margin-bottom">Sports</span>
-                    <span class="tag grey small margin-bottom">Games</span>
-                </div>
+                <button class="button white" v-on:click="getRecentImages"><i class="fa fa-diamond margin-right"></i>Recent</button>
+                <button class="button white hide-small" v-on:click="getPopularImages"><i class="fa fa-photo margin-right"></i>Popular</button>
+                <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Categories</button>
             </div>
         </div>
     </header>
-    
+
+    <div class="row-padding">
+        <paginate name="imagelist" :list="imagelist" :per="6">
+            <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
+                <a class="fancybox" rel="group" :href="entry.path">
+                    <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                </a>
+                <div class="container white" style="max-width:350px">
+                    <p>
+                        <b>{{ entry.title }}</b>
+                    </p>
+                    <p>{{ entry.description }}</p>
+                </div>
+            </div>
+        </paginate>
+    </div>
+    <div class="pagination" v-if="imagelist.length > 6">  
+        <paginate-links for="imagelist" :limit="3"></paginate-links>
+    </div>
     <!-- Insert Photo Grid here-->
     
 </div>
@@ -67,14 +75,38 @@
 </html>
 
 <script src="/public/javascript/jquery/jquery.js"></script>
+<script src="/public/javascript/jquery.fancybox.js"></script>
 <script src="/public/javascript/vue.js"></script>
+<script src="/public/javascript/vue-paginate.js"></script>
 <script>
+    $(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+
+
     // Script to _open and _close sidebar
-        new Vue({
+    new Vue({
         el: '#app',
         data: {
+            imagelist : [],
+            paginate: ['imagelist']
+        },
+        created: function(){
+            this.getPopularImages();
         },
         methods: {
+            getPopularImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/popular", function(result){ 
+                    self.imagelist = result;
+                });
+            },
+            getRecentImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/newest", function(result){ 
+                    self.imagelist = result;
+                });
+            },
             wt_open: function() {
                 document.getElementById("mySidebar").style.display = "block";
                 document.getElementById("myOverlay").style.display = "block";
