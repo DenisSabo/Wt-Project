@@ -43,7 +43,6 @@ var getAccountAPIRoute = require('./routes/getAccountAPI');
 //more routes
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
-var manageUsers = require("./routes/manageUsers.js");
 
 var app = express();
 
@@ -82,15 +81,13 @@ app.use("/", indexRoute);
 app.use("/getAccount", getAccountAPIRoute);
 
 /* ROUTER FOR HANDLING IMAGES */
-
-
-app.use('/users/manage', manageUsers);
 app.use('/images/filter', filterImages); //https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
 
-/* ADD COMMENT , jsonParser, upload.single()*/
-
 // multipart/form-data
+//Middleware Multer for uploading files
 app.use("/images/manage", upload.single("file"));
+
+//Safing metadata of image in database, validation and renaming file
 app.use('/images/manage', manageImages);
 
 //serves jQuery framework in directory root/lib (for frontend)
