@@ -18,10 +18,15 @@ var UserSchema = new Schema({
 		maxlength: [40, "GoogleID cannot be longer than 15 characters!"],
 		required: [true, "GoogleID is missing!"],
 		unique: [true, "User already exists!"]
-	}//,
-	//lastLogin: {
-	//	type: Date
-	//}
+	},
+	googlePicture: {
+		type: String, 
+		minlength: [3, "Path too short! At least 3 characters needed."],
+		maxlength: [40, "Path cannot be longer than 15 characters!"],
+		required: [true, "Path is missing!"],
+		unique: [true, "Path already exists!"]
+	}
+	//lastLogin ?
 });
 
 module.exports = mongoose.model("User", UserSchema);
