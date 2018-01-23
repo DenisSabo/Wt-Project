@@ -536,7 +536,7 @@ a {
 }
 
 .row-padding, .row-padding > .half, .row-padding > .third, .row-padding > .twothird, .row-padding > .threequarter, .row-padding > .quarter, .row-padding > .col {
-    padding: 0 8px
+    padding: 0 5px
 }
 
 .container, .panel {
@@ -668,27 +668,6 @@ a {
     background-color: #ccc !important
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 350px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    left: 105%;
-}
 
 /* Colors */
 .amber, .hover-amber:hover {
