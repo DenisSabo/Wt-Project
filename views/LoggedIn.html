@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-<title>WT</title>
+<title>WT-Project</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/public/stylesheets/main.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="/public/stylesheets/fonts.googleapisRaleway.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/public/stylesheets/jquery.fancybox.css">
 <style>
@@ -26,7 +26,7 @@
         <h4><button type="submit" v-on:click="GoogleLogout" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Logout</button></h4>
     </div>
     <div class="bar-block">
-        <a href="#portfolio" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>PORTFOLIO</a>
+        <a href="#galery" class="bar-item button padding text-teal"><i class="fa fa-th-large fa-fw margin-right"></i>GALERY</a>
         <a href="#upload" class="bar-item button padding"><i class="fa fa-envelope fa-fw margin-right"></i>UPLOAD</a>
     </div>
 </nav>
@@ -38,14 +38,14 @@
 <div class="main" style="margin-left:300px">
 
     <!-- Header -->
-    <header id="portfolio">
+    <header id="galery">
         <a href="#"><img v-bind:src="profilPicUrl" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
         <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
-            <h1><b>My Portfolio</b></h1>
+            <h1><b>Picture galery</b></h1>
             <div class="section bottombar padding-16">
                 <span class="margin-right">Filter:</span>
-                <button class="button black" v-on:click="getMyImages">My Images</button>
+                <button class="button white" v-on:click="getMyImages">My Images</button>
                 <button class="button white" v-on:click="getRecentImages"><i class="fa fa-diamond margin-right"></i>Recent</button>
                 <button class="button white hide-small" v-on:click="getPopularImages"><i class="fa fa-photo margin-right"></i>Popular</button>
                 <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Categories</button>
@@ -69,7 +69,7 @@
             </div>
         </paginate>
     </div>
-    <div class="pagination">  
+    <div class="pagination" v-if="imagelist.length > 6">  
         <paginate-links for="imagelist" :limit="3"></paginate-links>
     </div>
 
@@ -135,40 +135,6 @@
                     class="fa fa-upload fa-fw margin-right"></i>Upload Image</button>
         </form>
     </div>
-
-    <!-- Footer -->
-    <footer class="container padding-32 dark-grey">
-        <div class="row-padding">
-            <div class="third">
-                <h3>FOOTER</h3>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-
-            <div class="third">
-                <h3>BLOG POSTS</h3>
-                <ul class="ul hoverable">
-                    <li class="padding-16">
-                        <img src="https://w3schools.com/w3images/workshop.jpg" class="left margin-right" style="width:50px">
-                        <span class="large">Lorem</span><br>
-                        <span>Sed mattis nunc</span>
-                    </li>
-                    <li class="padding-16">
-                        <img src="https://w3schools.com/w3images/gondol.jpg" class="left margin-right" style="width:50px">
-                        <span class="large">Ipsum</span><br>
-                        <span>Praes tinci sed</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="third">
-                
-            </div>
-
-        </div>
-    </footer>
-
-
-    <!-- End page content -->
 </div>
 
 </div>
@@ -182,7 +148,14 @@
 <script src="/public/javascript/vue-paginate.js"></script>
 <script>
     $(document).ready(function() {
-		$(".fancybox").fancybox();
+        $(".fancybox").fancybox();
+        $(".number a").click(function(){
+            console.log('scroll to destination');
+
+            $('html, body').animate({
+                scrollTop: $($("#galery")).offset().top + "px"
+                }, 1000);
+        });
 	});
 
     new Vue({
@@ -190,7 +163,7 @@
         data: {
             profilName: '',
             profilPicUrl: '',
-            imagelist : [''],
+            imagelist : [],
             paginate: ['imagelist']
         },
         created: function(){
