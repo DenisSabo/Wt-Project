@@ -43,6 +43,7 @@ var getAccountAPIRoute = require('./routes/getAccountAPI');
 //more routes
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
+var manageUsers = require("./routes/manageUsers.js");
 
 var app = express();
 
@@ -89,6 +90,9 @@ app.use("/images/manage", upload.single("file"));
 
 //Safing metadata of image in database, validation and renaming file
 app.use('/images/manage', manageImages);
+
+//User
+app.use('/user', manageUsers);
 
 //serves jQuery framework in directory root/lib (for frontend)
 app.get("/jquery-3.2.1.js", function(req, res){
