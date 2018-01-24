@@ -10,6 +10,7 @@ exports.image_recent_list = function(req, res) {
 			res.status(500).end();
 		}
 		else{
+			res.setHeader('Content-Type', 'application/json');
 			res.status(200).json(docs);
 		}
 	});
@@ -30,6 +31,7 @@ exports.image_user_list = function(req, res) {
 						res.status(500).end("Something went wrong: %s", err);
 					}
 					else{
+						res.setHeader('Content-Type', 'application/json');
 						console.log("The images object looks like this %s", images);
 						res.status(201).json(images).end();
 					}
@@ -74,6 +76,7 @@ exports.image_popular_list = function(req, res) {
 			}
 
 			console.log("Sorted array of objects %s", image);
+			res.setHeader('Content-Type', 'application/json');
 			res.status(201).json(image).end();
 		}
 	})
@@ -90,7 +93,8 @@ exports.image_all = function(req, res){
 			res.status(500).end("Something went wrong: %s", err);
 		}
 		else{
-		res.status(200).json(image).end(); 
+			res.setHeader('Content-Type', 'application/json');
+			res.status(200).json(image).end(); 
 		}
 	});
 };
@@ -108,6 +112,7 @@ exports.image_list_page = function(req, res){
 				res.status(500),end("Something went wrong: %s", err);
 			}
 			else{
+				res.setHeader('Content-Type', 'application/json');
 				res.status(200).json(image).end(); 
 			}
 		}).skip(pageNumber * 9).limit(9);
@@ -151,7 +156,7 @@ exports.image_popular_list_page = function(req, res){
 						}
 					}
 				}
-
+				res.setHeader('Content-Type', 'application/json');
 				console.log("Sorted array of objects %s", image);
 				res.status(200).json(image).end();
 			}
