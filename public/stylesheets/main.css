@@ -63,9 +63,13 @@ ul {
         color: slategray;
       }
 
-.paginate-links.imagelist li{
-    padding: 8px 16px;
+.paginate-links.imagelist li {
+    padding: 4px 8px;
+}
+
+.paginate-links.imagelist li a{
     cursor: pointer;
+    font-size: 20px;
 }
 
 .paginate-links.imagelist{

@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		var categories = getValuesCheckbox();
 
 		var file = $( "#pic" )[0].files[0];
-		console.log("Collected data : " + title + author + description + tags + categories + file);
 		
 		//var dataFile = new FormData(); //data of picture 
 		var data = new FormData();
