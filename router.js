@@ -10,6 +10,10 @@ var get_Account_Controller = require('./controllers/getAccountController');
 var filterImages = require("./routes/filterImages.js");
 var manageImages = require("./routes/manageImages.js");
 
+// serve static files in directory "public"
+router.use('/public', express.static(__dirname + '/public'));
+router.use('/uploads', express.static(__dirname + '/uploads'));
+
 router.use('/images/filter', filterImages);
 router.use("/images/manage", upload.single("file"));
 router.use('/images/manage', manageImages);

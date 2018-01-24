@@ -17,10 +17,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var app = express();
 
-// serve static files in directory "public"
-app.use('/public', express.static(__dirname + '/public'));
-app.use('/uploads', express.static(__dirname + '/uploads'));
-
 // start session
 const sessionConfig = {
     resave: false,
