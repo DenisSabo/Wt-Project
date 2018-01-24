@@ -1,44 +1,7 @@
-const express = require('express');
-const path = require('path');
-const router = express.Router();
-var User = require('../models/users.js');
+var express = require('express');
+var router = express.Router();
+var index_controller = require('../controllers/indexController');
 
-router.get('/', function (req, res){
-    if (req.user) {
-    	console.log("Route: index.js activated.");
-    	console.log("Id: " + req.user.id);
-    	console.log("Name: " + req.user.displayname);
-    	console.log("Image: " + req.user.image);
-
-    	User.findOne({ "googleUserId" : req.user.id }, function(err, user){
-    		if(err){
-    			res.status(404).end(err);
-    		}
-    		else{
-    			if(user){
-    				//user already safed in database
-    				res.sendfile(path.resolve('views/LoggedIn.html'));
-    			}
-    			else{
-    				var user_instance = new User({ googleUserId: req.user.id, username: req.user.displayname, googlePicture: req.user.image});
-    				user_instance.save(function(err){
-						if(err){
-							console.log("Error while trying to safe new user: " + err);
-							//Validation failed
-							res.status(404).sendfile(path.resolve('views/index.html'));
-						}
-						else{
-							console.log("New user added: " + req.user.displayname);
-							res.status(404).sendfile(path.resolve('views/LoggedIn.html'));
-						}
-					})
-    			}
-    		}
-    	})
-    }
-    else{
-    	res.status(404).sendfile(path.resolve('views/index.html'));
-    }
-});
+router.get('/', index_controller.default);
 
 module.exports = router;
