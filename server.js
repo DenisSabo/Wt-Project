@@ -25,12 +25,9 @@ const sessionConfig = {
     signed: true
   };
 app.use(expressSession(sessionConfig));
-
-// use Oauth2
 app.use(passport.initialize());
 app.use(passport.session());
-var oauth2Route = require('./models/oauth2');
-app.use(oauth2Route.router);
+
 
 // use router
 app.use("/", router);
