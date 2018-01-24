@@ -19,7 +19,7 @@
         <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-        <img v-bind:src="profilPicUrl" style="width:40%;" class="round"><br><br>
+        <img v-bind:src="profilPicUrl" style="width:40%;" class="round" alt="userPicture"><br><br>
         <h4><b>{{ profilName }}</b></h4>
     </div>
     <div class="bar-block">
@@ -39,7 +39,7 @@
 
     <!-- Header -->
     <header id="galery">
-        <a href="#"><img v-bind:src="profilPicUrl" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
+        <a href="#"><img v-bind:src="profilPicUrl" style="width:65px;" class="circle right margin hide-large hover-opacity" alt="userPicture"></a>
         <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
             <h1><b>Picture galery</b></h1>
