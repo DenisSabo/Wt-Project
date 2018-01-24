@@ -5,11 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/public/stylesheets/main.css">
-<link rel="stylesheet" href="/public/stylesheets/fonts.googleapisRaleway.css">
+<link rel="stylesheet" href="/public/stylesheets/rawline.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/public/stylesheets/jquery.fancybox.css">
 <style>
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+    body,h1,h2,h3,h4,h5,h6 {font-family: 'rawline', sans-serif}
 </style>
 <body class="light-grey content" style="max-width:1600px">
 <div id="app">
@@ -18,7 +18,7 @@
         <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-        <img src="/public/pictures/guest.png" style="width:40%;" class="round"><br><br>
+        <img src="/public/pictures/guest.png" style="width:40%;" class="round" alt="guestPicture"><br><br>
     </div>
     <div class="bar-block">
         <h4><button type="submit" v-on:click="GoogleRedirectLogin" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
@@ -36,7 +36,7 @@
 
     <!-- Header -->
     <header id="galery">
-        <a href="#"><img src="/public/pictures/guest.png" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
+        <a href="#"><img src="/public/pictures/guest.png" style="width:65px;" class="circle right margin hide-large hover-opacity" alt="guestPicture"></a>
         <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
             <h1><b>Picture galery</b></h1>
@@ -44,26 +44,29 @@
                 <span class="margin-right">Filter:</span>
                 <button class="button white" v-on:click="getRecentImages"><i class="fa fa-diamond margin-right"></i>Recent</button>
                 <button class="button white hide-small" v-on:click="getPopularImages"><i class="fa fa-photo margin-right"></i>Popular</button>
-                <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Categories</button>
+                <button class="button white hide-small" v-on:click="getAllImages"><i class="fa fa-map-pin margin-right"></i>All</button>
             </div>
         </div>
     </header>
 
-    <div class="row-padding">
+    <div>
         <paginate name="imagelist" :list="imagelist" :per="6">
-            <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
-                <a class="fancybox" rel="group" :href="entry.path">
-                    <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
-                </a>
-                <div class="container white" style="max-width:350px">
-                    <p>
-                        <b>{{ entry.title }}</b>
-                    </p>
-                    <p>{{ entry.description }}</p>
+            <div class="row-padding" v-for="i in Math.ceil(imagelist.length / 3)">
+                <div class="third container margin-bottom" v-for="entry in paginated('imagelist').slice((i - 1) * 3, i * 3)">
+                    <a class="fancybox" rel="group" :href="entry.path">
+                        <img v-bind:src="entry.path" v-bind:id="entry._id" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                    </a>
+                    <div class="container white" style="max-width:350px">
+                        <p>
+                            <b>{{ entry.title }}</b>
+                        </p>
+                        <p>{{ entry.description }}</p>
+                    </div>
                 </div>
             </div>
         </paginate>
     </div>
+    
     <div class="pagination" v-if="imagelist.length > 6">  
         <paginate-links for="imagelist" :limit="3"></paginate-links>
     </div>
@@ -71,10 +74,7 @@
     
 </div>
 </div>
-</body>
-</html>
-
-<script src="/public/javascript/jquery/jquery.js"></script>
+	<script src="/public/javascript/jquery/jquery.js"></script>
 <script src="/public/javascript/jquery.fancybox.js"></script>
 <script src="/public/javascript/vue.js"></script>
 <script src="/public/javascript/vue-paginate.js"></script>
@@ -114,6 +114,12 @@
                     self.imagelist = result;
                 });
             },
+            getAllImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/all", function(result){ 
+                    self.imagelist = result;
+                });
+            },
             wt_open: function() {
                 document.getElementById("mySidebar").style.display = "block";
                 document.getElementById("myOverlay").style.display = "block";
@@ -131,3 +137,6 @@
         }
     })
 </script>
+</body>
+</html>
+

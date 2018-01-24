@@ -5,11 +5,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/public/stylesheets/main.css">
-<link rel="stylesheet" href="/public/stylesheets/fonts.googleapisRaleway.css">
+<link rel="stylesheet" href="/public/stylesheets/rawline.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/public/stylesheets/jquery.fancybox.css">
 <style>
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+    body,h1,h2,h3,h4,h5,h6 {font-family: 'rawline', sans-serif}
 </style>
 <body class="light-grey content" style="max-width:1600px">
 <div id="app">
@@ -19,7 +19,7 @@
         <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-        <img v-bind:src="profilPicUrl" style="width:40%;" class="round"><br><br>
+        <img v-bind:src="profilPicUrl" style="width:40%;" class="round" alt="userPicture"><br><br>
         <h4><b>{{ profilName }}</b></h4>
     </div>
     <div class="bar-block">
@@ -39,7 +39,7 @@
 
     <!-- Header -->
     <header id="galery">
-        <a href="#"><img v-bind:src="profilPicUrl" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
+        <a href="#"><img v-bind:src="profilPicUrl" style="width:65px;" class="circle right margin hide-large hover-opacity" alt="userPicture"></a>
         <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
             <h1><b>Picture galery</b></h1>
@@ -48,23 +48,25 @@
                 <button class="button white" v-on:click="getMyImages">My Images</button>
                 <button class="button white" v-on:click="getRecentImages"><i class="fa fa-diamond margin-right"></i>Recent</button>
                 <button class="button white hide-small" v-on:click="getPopularImages"><i class="fa fa-photo margin-right"></i>Popular</button>
-                <button class="button white hide-small"><i class="fa fa-map-pin margin-right"></i>Categories</button>
+                <button class="button white hide-small" v-on:click="getAllImages"><i class="fa fa-map-pin margin-right"></i>Allries</button>
             </div>
         </div>
     </header>
 
     <!-- Container that holds all images -->
-    <div class="row-padding">
+    <div>
         <paginate name="imagelist" :list="imagelist" :per="6">
-            <div class="third container margin-bottom" v-for="entry in paginated('imagelist')">
-                <a class="fancybox" rel="group" :href="entry.path">
-                    <img v-bind:src="entry.path" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
-                </a>
-                <div class="container white" style="max-width:350px">
-                    <p>
-                        <b>{{ entry.title }}</b>
-                    </p>
-                    <p>{{ entry.description }}</p>
+            <div class="row-padding" v-for="i in Math.ceil(imagelist.length / 3)">
+                <div class="third container margin-bottom" v-for="entry in paginated('imagelist').slice((i - 1) * 3, i * 3)">
+                    <a class="fancybox" rel="group" :href="entry.path">
+                        <img v-bind:src="entry.path" v-bind:id="entry._id" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                    </a>
+                    <div class="container white" style="max-width:350px">
+                        <p>
+                            <b>{{ entry.title }}</b>
+                        </p>
+                        <p>{{ entry.description }}</p>
+                    </div>
                 </div>
             </div>
         </paginate>
@@ -138,9 +140,8 @@
 </div>
 
 </div>
-</body>
-</html>
-
+	
+	
 <script src="/public/javascript/jquery/jquery.js"></script>
 <script src="/public/javascript/UploadImageHandler.js"></script>
 <script src="/public/javascript/jquery.fancybox.js"></script>
@@ -148,7 +149,19 @@
 <script src="/public/javascript/vue-paginate.js"></script>
 <script>
     $(document).ready(function() {
-        $(".fancybox").fancybox();
+        $(".fancybox").fancybox({
+            afterLoad: function(current, previous) {
+                var PicID = $(this.element).children().attr('id');
+                $.ajax({
+			        url: "/images/manage/clicked/" + PicID,
+                    method: "POST",
+                    success: function(){
+                        console.log("ajax request success");
+                    }
+                }) 
+		    }
+        });
+
         $(".number a").click(function(){
             console.log('scroll to destination');
 
@@ -209,8 +222,17 @@
                     self.imagelist = result;
                 });
             },
+            getAllImages: function(){
+                var self = this;
+                $.getJSON(window.location.origin + "/images/filter/all", function(result){ 
+                    self.imagelist = result;
+                });
+            },
         }
     })
 
 </script>
+
+</body>
+</html>
 

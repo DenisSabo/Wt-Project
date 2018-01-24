@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			$("#uploadImage").removeAttr('disabled');
 		})
 		.fail(function( jqXHR, textStatus ){
-			alert( "Request failed: " + textStatus );
+			alert( "Request failed: " + jqXHR.responseText );
 			$("#uploadImage").removeAttr('disabled');
 		});
 		
