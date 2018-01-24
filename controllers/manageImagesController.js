@@ -128,7 +128,7 @@ exports.image_increment_clicks = function(req, res) {
 		res.status(404).end("/images/manage/clicked/:id; id is empty. Send images objectid");
 	}
 	else{
-		Image.update({_id: objectID }, { clicks: clicks++ }, function(err, image){
+		Image.update({_id: objectID }, { $inc : { "clicks" : 1 }}, function(err, image){
 			if(err){
 				console.log("Error occured while trying to increment clicks" + err);
 				res.status(404).end("Image does not exist. Clicks not incremented: " + err);
