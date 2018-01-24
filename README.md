@@ -4,7 +4,7 @@
 
 1. get [docker](https://www.docker.com/) <-- download available on their webside
 
-2. copy and rename the file **config/default.json.const** to **config/default.json** and enter your websettings
+2. copy and rename the file **config/default.json.const** to **config/default.json** and enter your websettings or use the example config that is already in the folder
 
 3. enter the following command in the project folder
     ```sh
@@ -24,12 +24,14 @@
 
 4. copy and rename the file **config/default.json.const** to **config/default.json** and enter your websettings
 
-5. look up whether mongodb service is running or not / start mondodb service
+5. check the mongodb.connectionstring in **config/default.json** because the local mongo service runs on localhost (127.0.0.1) not on a docker container called "mongo"
+
+6. look up whether mongodb service is running or not / start mondodb service
     ```sh
         $ mongod
     ```
 
-6. Start the webserver on localhost
+7. Start the webserver on localhost
     ```sh
         $ npm start
     ```
