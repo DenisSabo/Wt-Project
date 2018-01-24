@@ -23,7 +23,6 @@ exports.image_user_list = function(req, res) {
 		if(err) res.status(500).end("Something went wrong: %s", err);
 		else{
 			if(user){
-				console.log("User was found: " + user._id);
 				//mongoose query for getting all images of one specific user in one array
 				Image.find({ 'user': user._id }, function(err, images){
 					if(err){
