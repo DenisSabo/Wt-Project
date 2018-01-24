@@ -11,7 +11,7 @@ exports.default = function (req, res){
     		else{
     			if(user){
     				//user already safed in database
-    				res.sendfile(path.resolve('views/LoggedIn.html'));
+    				res.sendFile(path.resolve('views/LoggedIn.html'));
     			}
     			else{
     				var user_instance = new User({ googleUserId: req.user.id, username: req.user.displayname, googlePicture: req.user.image});
@@ -19,11 +19,11 @@ exports.default = function (req, res){
 						if(err){
 							console.log("Error while trying to safe new user: " + err);
 							//Validation failed
-							res.status(404).sendfile(path.resolve('views/index.html'));
+							res.status(404).sendFile(path.resolve('views/index.html'));
 						}
 						else{
 							console.log("New user added: " + req.user.displayname);
-							res.status(404).sendfile(path.resolve('views/LoggedIn.html'));
+							res.status(404).sendFile(path.resolve('views/LoggedIn.html'));
 						}
 					})
     			}
@@ -31,6 +31,6 @@ exports.default = function (req, res){
     	})
     }
     else{
-    	res.status(200).sendfile(path.resolve('views/index.html'));
+    	res.status(200).sendFile(path.resolve('views/index.html'));
     }
 };
