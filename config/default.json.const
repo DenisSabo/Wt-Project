@@ -7,11 +7,6 @@
     "protocol": "http",
     "port": 8080
   },
-  "MySQL": {
-    "user": "user",
-    "password": "pw",
-    "database": "src"
-  },
   "MongoDB": {
     "connectionString": "connectionstring"
   }

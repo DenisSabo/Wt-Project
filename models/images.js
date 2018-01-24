@@ -4,19 +4,18 @@ var mongoose = require("mongoose");
 //Define a schema
 var Schema = mongoose.Schema;
 
-var ImageModelSchema = new Schema({
+var ImageSchema = new Schema({
 	title: { 
 		type: String, 
 		minlength: [3, "Title has to contain at least 3 characters!"],
 		maxlength: [15, "Title cannot be longer than 15 characters!"],
-		required: [true, "Title of image is missing!"] 
+		required: [true, "Title of image is missing!"]
 	}, 
-	//TODO add as foreign key to ./author.js
-	user: { 
-		type: String,
-		minlength: [3, "User name has to contain at least 3 characters!"], 
-		maxlength: [40, "User name cannot be longer than 20 characters!"],
-		required: [true, "User is missing!"] 
+	//Foreign key to ./users.js
+	user: {
+		type: Schema.Types.ObjectId,
+		ref: ['User', "User does not exist"],
+		required: true
 	},
 	description: {
 		type: String,
@@ -24,7 +23,7 @@ var ImageModelSchema = new Schema({
 	},
 	//Used for searching later (Tags + title + maybe: categories)
 	tags: [String], 
-	categories: [String], 
+	categories: [String],
 	//Where was the picture shot? (Country, City, point of interest, whatever)
 	place: { 	
 		type: String,
@@ -33,47 +32,42 @@ var ImageModelSchema = new Schema({
 	},
 	path: {
 		type : String,
-		required: [true, "Path to picture's destination is missing!"]
+		required: [true, "Path to picture's destination is missing!"],
+		unique: true
 	},
 	clicks: {
 		type : Number,
 		default : 0
-	},
-	likes: {
-		type : Number,
-		default : 0
-	},
-	date: { //Timestamp, client side (What if user is from another country)
-		type : Date, 
-		required: [true, "Date of image upload required!"]
 	},
 	imageType: {
 		type: String,
 		required: [true, "Image type is missing!"],
 		//you can add more image types here!
 		enum: ['png', 'jpg', 'jpeg','gif']
-	}
+	},
+	uploadTime: {
+        type: Date,
+        default: Date.now,
+      }
 });
 
-/* MORE VALIDATION ... YEAH! */
-ImageModelSchema.path('categories').validate(function (value) {
-	if(value.length > 3){
-		return false
-	}
-	else 
-		return true;
-}, 'Not more than 3 categories allowed'); 
+/* Check categories. Same as ENUM. Could be implemented as foreign key in a schema called categories ... */
+ImageSchema.path('categories').validate(function (value) {
 
-/* 
-ImageModelSchema.path('author').validate(function (value) {
-	if(value === "undefined" || value === "null"){
-		return false
+	if(value[0] !== "non-photographic" && value[0] !== "photographic" && value[0] !== "else"){
+		return false;
 	}
-	else 
+	else if(value[1] !== "nature" && value[1] !== "urban" && value[1] !== "people" && value[1] !== "else"){
+		return false;
+	}
+	else if(value[2] !== "science" && value[2] !== "technology" && value[2] !== "entertainment" && value[2] !== "else"){
+		return false;
+	}
+	else{
 		return true;
-}, 'Author cannot be undefined or null'); 
-*/
+	}
+}, 'Invalid categories!'); 
 
 
 								//Collection  //Schema that will be used for creating the model
-module.exports = mongoose.model("ImageModel", ImageModelSchema);
+module.exports = mongoose.model("ImageModel", ImageSchema);

@@ -21,6 +21,9 @@ router.get("/user/all", filter_images_controller.image_user_list);
 //get one specific image
 router.get("/user/:id", filter_images_controller.image_user_list);
 
+//get all images
+router.get("/all", filter_images_controller.image_all);
+
 
 
 module.exports = router;

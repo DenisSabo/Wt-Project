@@ -13,7 +13,8 @@ html {
 }
 
 body {
-    margin: 0
+    margin: 0;
+    font-family: 'rawline', sans-serif
 }
 
 footer, header, nav{
@@ -29,6 +30,74 @@ a:active, a:hover {
     outline-width: 0
 }
 
+ul {
+    display: inline;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination{
+    text-align: center;
+
+}
+
+.paginate-list {
+    width: 159px;
+    margin: 0 auto;
+    text-align: left;
+}
+.paginate-list li {
+    padding: 8px 16px;
+    float: left;
+    width: auto;
+    border: none;
+    outline: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap
+}
+.paginate-list li:before {
+        content: '⚬ ';
+        font-weight: bold;
+        color: slategray;
+      }
+
+.paginate-links.imagelist li {
+    padding: 4px 8px;
+}
+
+.paginate-links.imagelist li a{
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.paginate-links.imagelist{
+    user-select: none;
+    display: inline-flex;
+    align-content: center;
+}
+    .paginate-links.imagelist a{
+      cursor: pointer;
+    }
+
+    .paginate-links.imagelist li.active{
+        background-color: #000;
+      }
+
+    .paginate-links.imagelist li.active a {
+      font-weight: bold;
+      color: #fff
+    }
+    .paginate-links.imagelist li.next:before {
+      content: ' | ';
+      margin-right: 13px;
+      color: #ddd;
+    }
+    .paginate-links.imagelist li.disabled a {
+      color: #ccc;
+      cursor: no-drop;
+    }
 
 img {
     border-style: none
@@ -102,7 +171,7 @@ h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: 'rawline', sans-serif;
     font-weight: 400;
     margin: 10px 0
 }
@@ -471,7 +540,7 @@ a {
 }
 
 .row-padding, .row-padding > .half, .row-padding > .third, .row-padding > .twothird, .row-padding > .threequarter, .row-padding > .quarter, .row-padding > .col {
-    padding: 0 8px
+    padding: 0 5px
 }
 
 .container, .panel {
@@ -603,27 +672,6 @@ a {
     background-color: #ccc !important
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 350px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    left: 105%;
-}
 
 /* Colors */
 .amber, .hover-amber:hover {

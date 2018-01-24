@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 
-
-<title>Home/Login</title>
+<title>WT-Project</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/public/stylesheets/main.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="/public/stylesheets/rawline.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/stylesheets/jquery.fancybox.css">
 <style>
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+    body,h1,h2,h3,h4,h5,h6 {font-family: 'rawline', sans-serif}
 </style>
 <body class="light-grey content" style="max-width:1600px">
 <div id="app">
@@ -18,27 +18,14 @@
         <a href="#" v-on:click="wt_close" class="hide-large right jumbo padding hover-grey" title="close menu">
             <i class="fa fa-remove"></i>
         </a>
-     </div>
-     <div class="container hover-text-red" id="signin">
-                <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in</b></h4>
-            </div>
-           <div class="container hover-text-red" id="signup">
-               <h4><b><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up</b></h4>
-           </div>
-    <div class="bar-block" id="login">
-        <div class="bar-item margin-top"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
-        <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
-        <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Login</button>
-        <h4><button type="submit" v-on:click="GoogleRedirect" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
+        <img src="/public/pictures/guest.png" style="width:40%;" class="round" alt="guestPicture"><br><br>
     </div>
-     <div class="bar-block" id="register">
-        <div class="bar-item margin-top"><i class="fa fa-user-o fa-fw margin-right"></i><input type="text" placeholder="Username"></div>
-        <div class="bar-item"><i class="fa fa-envelope-o fa-fw margin-right"></i><input type="text" placeholder="Email address"></div>
-        <div class="bar-item"><i class="fa fa-unlock fa-fw margin-right"></i><input type="password" placeholder="Password"></div>
-        <button type="submit" class="bar-item button margin-bottom"><i class="fa fa-sign-in fa-fw margin-right" aria-hidden="true"></i>Sign up</button>
-        <h4><button type="submit" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Sign up with Google</button></h4>
+    <div class="bar-block">
+        <h4><button type="submit" v-on:click="GoogleRedirectLogin" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</button></h4>
+    </div>   
+    <div class="bar-block">
+        <h4><button type="submit" v-on:click="GoogleRedirectRegister" class="bar-item button margin-bottom red"><i class="fa fa-google fa-fw"></i>&nbsp;&nbsp;&nbsp;Get an Account</button></h4>
     </div>
-
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -48,130 +35,50 @@
 <div class="main" style="margin-left:300px">
 
     <!-- Header -->
-    <header id="Home">
-        <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="circle right margin hide-large hover-opacity"></a>
+    <header id="galery">
+        <a href="#"><img src="/public/pictures/guest.png" style="width:65px;" class="circle right margin hide-large hover-opacity" alt="guestPicture"></a>
         <span class="button hide-large xxlarge hover-text-grey" v-on:click="wt_open"><i class="fa fa-bars"></i></span>
         <div class="container">
-            <h1><b>Home</b></h1>
+            <h1><b>Picture galery</b></h1>
             <div class="section bottombar padding-16">
                 <span class="margin-right">Filter:</span>
-                <button class="button black"><i class="fa fa-users margin-right"></i>ALL</button>
-                <button class="button white"><i class="fa fa-user-o margin-right"></i>Denis</button>
-                <button class="button white"><i class="fa fa-user-o margin-right"></i>Ludwig</button>
-                <button class="button white"><i class="fa fa-user-o margin-right"></i>Raphael</button>
-                <br>
-                <div class="section bottombar margin-top">
-                    <span class="margin-right">Tags:</span>
-                    <span class="tag grey small smargin-bottom">Travel</span> <span class="tag grey small margin-bottom">Ideas</span>
-                    <span class="tag grey small margin-bottom">Family</span> <span class="tag grey small margin-bottom">Clothing</span>
-                    <span class="tag grey small margin-bottom">Shopping</span> <span class="tag grey small margin-bottom">Sports</span>
-                    <span class="tag grey small margin-bottom">Games</span>
-                </div>
+                <button class="button white" v-on:click="getRecentImages"><i class="fa fa-diamond margin-right"></i>Recent</button>
+                <button class="button white hide-small" v-on:click="getPopularImages"><i class="fa fa-photo margin-right"></i>Popular</button>
+                <button class="button white hide-small" v-on:click="getAllImages"><i class="fa fa-map-pin margin-right"></i>All</button>
             </div>
         </div>
     </header>
-    <!-- First Photo Grid-->
-    <div class="row-padding">
-        <div class="third container margin-bottom">
-            <img src="https://w3schools.com/w3images/mountains.jpg" alt="Norway" style="width:100%" class="hover-opacity">
-            <div class="container white">
-                <p><b>Lorem Ipsum</b></p>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-        </div>
-        <div class="third container margin-bottom">
-            <img src="https://w3schools.com/w3images/lights.jpg" alt="Norway" style="width:100%" class="hover-opacity">
-            <div class="container white">
-                <p><b>Lorem Ipsum</b></p>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-        </div>
-        <div class="third container">
-            <img src="https://w3schools.com/w3images/nature.jpg" alt="Norway" style="width:100%" class="hover-opacity">
-            <div class="container white">
-                <p><b>Lorem Ipsum</b></p>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-        </div>
-    </div>
 
-    <!-- Second Photo Grid-->
-    <div class="row-padding">
-        <div class="third container margin-bottom">
-            <img src="https://w3schools.com/w3images/p1.jpg" alt="Norway" style="width:100%" class="hover-opacity">
-            <div class="container white">
-                <p><b>Lorem Ipsum</b></p>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+    <div>
+        <paginate name="imagelist" :list="imagelist" :per="6">
+            <div class="row-padding" v-for="i in Math.ceil(imagelist.length / 3)">
+                <div class="third container margin-bottom" v-for="entry in paginated('imagelist').slice((i - 1) * 3, i * 3)">
+                    <a class="fancybox" rel="group" :href="entry.path">
+                        <img v-bind:src="entry.path" v-bind:id="entry._id" alt="Juhu" style="width:100%; max-width:350px" class="hover-opacity">
+                    </a>
+                    <div class="container white" style="max-width:350px">
+                        <p>
+                            <b>{{ entry.title }}</b>
+                        </p>
+                        <p>{{ entry.description }}</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="third container margin-bottom">
-            <img src="https://w3schools.com/w3images/p2.jpg" alt="Norway" style="width:100%" class="hover-opacity">
-            <div class="container white">
-                <p><b>Lorem Ipsum</b></p>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-        </div>
-        <div class="third container">
-            <img src="https://w3schools.com/w3images/p3.jpg" alt="Norway" style="width:100%" class="hover-opacity">
-            <div class="container white">
-                <p><b>Lorem Ipsum</b></p>
-                <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            </div>
-        </div>
+        </paginate>
     </div>
-
-    <!-- Pagination -->
-    <div class="center padding-32">
-        <div class="bar">
-            <a href="#" class="bar-item button hover-black">«</a>
-            <a href="#" class="bar-item black button">1</a>
-            <a href="#" class="bar-item button hover-black">2</a>
-            <a href="#" class="bar-item button hover-black">3</a>
-            <a href="#" class="bar-item button hover-black">4</a>
-            <a href="#" class="bar-item button hover-black">»</a>
-        </div>
+    
+    <div class="pagination" v-if="imagelist.length > 6">  
+        <paginate-links for="imagelist" :limit="3"></paginate-links>
     </div>
-
+    <!-- Insert Photo Grid here-->
+    
 </div>
 </div>
+<script src="/public/javascript/jquery/jquery.js"></script>
+<script src="/public/javascript/jquery.fancybox.js"></script>
+<script src="/public/javascript/vue.js"></script>
+<script src="/public/javascript/vue-paginate.js"></script>
+<script src="/public/javascript/index.js"></script>
 </body>
 </html>
 
-<script src="/public/javascript/jquery/jquery.js"></script>
-<script src="/public/javascript/vue.js"></script>
-<script>
-    // Script to _open and _close sidebar
-        new Vue({
-        el: '#app',
-        data: {
-        },
-        methods: {
-            wt_open: function() {
-                document.getElementById("mySidebar").style.display = "block";
-                document.getElementById("myOverlay").style.display = "block";
-            },
-            wt_close: function() {
-                document.getElementById("mySidebar").style.display = "none";
-                document.getElementById("myOverlay").style.display = "none";
-            },
-            GoogleRedirect: function() {
-                window.location = window.location.origin + "/auth/login";
-            }
-        }
-    })
-</script>
-
-<script>
-    // Script to change between SignIn and SignUp
-    
-        $("#register").hide();
-    $("#signin").click(function(){
-        $("#register").hide();
-        $("#login").show();
-    });
-    $("#signup").click(function(){
-        $("#login").hide();
-        $("#register").show();
-    });
-    
-</script>

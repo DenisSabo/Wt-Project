@@ -1,90 +1,148 @@
-var Image = require('../models/images.js');
 var fs = require("fs");
+var Image = require('../models/images.js');
+var User = require('../models/users.js');
 
 // Save image to server in "/uploads/"
 exports.image_create_post = function(req, res) {
-	console.log("manageImagesController/image_create_post: " + req);
 
-	var contentType = req.get("Content-Type");
-	//jQuery sets datatype to urlencoded, forcing it to set Contet-Type to multipart/form-data leads to errors
-	if(contentType = "application/x-www-form-urlencoded"){
-		/* COLLECT DATA*/
-		var fileEnding =  getMimeTypeEnding(req.file.mimetype);
-
-		//rename file
-		//idea : timestamp + username + title  unique name for image
-		var oldPath = req.file.path;
-		var n = Date.now(); 
-		var newPath = "uploads/" + req.user.id + '_' + req.body.title + '_' + n + '.' + fileEnding;
-		console.log("Old path :" + oldPath + " new Path: " + newPath);
-
-		fs.rename(oldPath, newPath, function(err){
-			if(err){
-				console.log(err);
-				res.status(500).send("Internal Server Error: Renaming file failed.");
-			}
-		});
-		
-
-		var image = {
-			/* VALIDATION IN ROOT/models/images.js */
-			title : req.body.title,
-			user : req.user.id, //works for google authentification
-			description : req.body.description,
-			tags : req.body.tags,
-			categories : req.body.categories,
-			place : req.body.place,
-			path : newPath,
-			timestamp : req.body.date,
-			fileType : fileEnding
-		}
-
-		//trying to insert into db. 
-		insertImage(image, function(err){
-			console.log(err);
-		});
-
-
-        // Create an instance of model ImageModel, by giving it the send json as js object
-        
-    }    
-
-};
-
-/**
-
-//gets images specified by id in URL
-exports.image_id_get = function(req, res){
-	//get route parameter "id" specified in manageImages.js (Method: get, URL: images/manage/:id)
-	var imageID = req.params.id;
-
-	//URL of image
-	var url = "/uploads/" + imageID;
-	var image = fs.readFile(url, function(err, data) {
+	console.log("manageImagesController/image_create_post: ");
+	User.findOne({ "googleUserId" : req.user.id }, function(err, user){
 		if(err){
-			handleError();
+			console.log("User not available");
+			res.status(404).end(err);
 		}
 		else{
+			var objectId = user._id;
 
+			var oldPath = req.file.path;
+			var fileEnding =  getMimeTypeEnding(req.file.mimetype); //needed in renameUploadedFile and in var image
+			var timestamp = Date.now(); 
+			var newPath = "uploads/" + req.user.id + '_' + req.body.title + '_' + timestamp + '.' + fileEnding;
+			var categories = req.body.categories;
+			var result = categories.split(","); 
+
+			var image = {
+					title : req.body.title,
+					user : objectId, //works for google authentification
+					description : req.body.description,
+					tags : req.body.tags,
+					categories : result,
+					place : req.body.place,
+					path : newPath,
+					fileType : fileEnding
+				}
+
+			//trying to insert into db. Validation happens in model. (Mongoose validation)
+			insertImage(image, function(err){
+				if(err){
+					var thisError = err;
+					//Image was not safed to database
+					console.log(err);
+					//File will be deleted (Uploaded instantly by multer)
+					fs.unlink(oldPath, function(err){
+						if(err){
+							console.log(err);
+							//Should not happen
+							console.log("WARNING: Useless image was not deleted from filesystem: " + oldPath);
+						}
+						else{
+							//Uploaded file was deleted from filesystem
+							console.log("Uploaded file was deleted from filesystem");
+							
+							if(thisError.errors.title) res.status(406).send(thisError.errors.title.message);
+							else res.status(500).end("something broke");
+						}
+					})
+			
+				}		
+				else{
+					fs.rename(oldPath, newPath, function(err){
+						if(err){
+							fs.unlink(oldPath, function(err){
+								if(err){
+									console.log("WARNING: Useless image was not deleted from filesystem: " + oldPath);
+									res.status(500).end(err);
+								}
+								else{
+									console.log("Error occured while renaming file");
+									res.status(500).end(err);
+								}
+							})
+					
+						}
+						else{
+							//File was successfully safed to database and uploaded
+							console.log("File was uploaded successfully");
+							res.status(201).end("File was created successfully");
+						}
+					});
+				}
+			});
 		}
 	});
-}
-*/
-
-//Handle image delete on delete
-exports.image_delete_delete = function(req, res) {
-	console.log("manageImagesController/image_delete_delete: " + req);
-	res.send('NOT IMPLEMENTED: Image delete on delete');
+	
 };
 
+//Handle image delete on delete
+//Route: /images/manage/
+//Method: delete
+//Data: req.params.path (/images/manage/:path) must contain path to image, that has to be deleted
+exports.image_delete_delete = function(req, res) {
+	var path = req.params.path;
+	if(path === null || path === undefined){
+		console.log("Req.body.path is needed.");
+		res.status(404).end("Req.body.path is needed.");
+	}
+	else{
+		Image.remove( { path: path }, function(err){
+		if(err){
+			res.status(404).end("Image not deleted: " + err + "; " + req.body.path);
+		}
+		else{
+			fs.unlink(path, function(err){
+				//deletes file from filesystem 
+				if(err){
+					res.status(500).end("Image was not deleted from filesystem. Please check in filesystem: " + req.body.path);
+				}
+				else{
+					res.status(204).end("Image was deleted successfully");
+				}
+			});
+			console.log("Image deleted: " + req.body.path);
+			res.status(204).end("Image deleted: " + req.body.path);
+		}
+	});
+	}
+	
+};
+
+//Handles image changes on put (for example new title, or description)
+//Route: /images/manage/clicked/:id
+//Method: put
+exports.image_increment_clicks = function(req, res) {
+	var objectID = req.params.id;	
+	if(objectID === null || objectID === undefined){
+		console.log("/images/manage/clicked/:id; id is empty. Send images objectid");
+		res.status(404).end("/images/manage/clicked/:id; id is empty. Send images objectid");
+	}
+	else{
+		Image.update({_id: objectID }, { $inc : { "clicks" : 1 }}, function(err, image){
+			if(err){
+				console.log("Error occured while trying to increment clicks" + err);
+				res.status(404).end("Image does not exist. Clicks not incremented: " + err);
+			}
+			else{
+				res.status(200).end("Clicks incremented");
+			}
+		})
+	}
+};
 
 //Handles image changes on put (for example new title, or description)
 exports.image_change_put = function(req, res) {
-	console.log("manageImagesController/image_change_put: " + req);
-	res.send('NOT IMPLEMENTED: Image change on update');
+
 };
 
-/* TODO : Eigene Funktionen für die Queries erstellen!!! */
 
 /* Functions for validation */
 function validateType(mimeType){
@@ -122,21 +180,22 @@ function getMimeTypeEnding(mimetype){
 function insertImage(image, callback){
 	try{
 	var image_instance = new Image({ title : image.title, user: image.user, description: image.description, tags: image.tags, categories : 
-		image.categories, place : image.place, path : image.path, date : image.timestamp, imageType : image.fileType});
+		image.categories, place : image.place, path : image.path, imageType : image.fileType});
 	}catch(err){
 		//callback will be called with error message in parameter
 		callback(err);
 	}
 
 	// Save the new model instance, passing a callback
-        image_instance.save(function (err) {
-        	//err = error messages defined in Schema of image (root/models/image.js)
-              if (err) {
-                  callback(err);
-              	}
-			  else{
-                  console.log("Author/User '" +image.user + "' safed a image called '" + image.title + "' to our site.");
-              	}
-        });
+    image_instance.save(function (err) {
+        //err = error messages defined in Schema of image (root/models/image.js)
+        if (err) {
+            callback(err);
+        }
+		else{
+            console.log("Author/User '" + image.user + "' safed a image called '" + 
+            	image.title + "' to our database.");
+            callback(0);
+        }
+    });
 }
-
