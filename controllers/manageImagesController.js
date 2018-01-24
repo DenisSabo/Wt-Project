@@ -6,17 +6,12 @@ var User = require('../models/users.js');
 exports.image_create_post = function(req, res) {
 
 	console.log("manageImagesController/image_create_post: ");
-
-	//get current user, who trys to upload
-	console.log("manage images: current user: " + req.user.id);
-
 	User.findOne({ "googleUserId" : req.user.id }, function(err, user){
 		if(err){
 			console.log("User not available");
 			res.status(404).end(err);
 		}
 		else{
-			console.log("manage images: obejctId: " + user._id);
 			var objectId = user._id;
 
 			var oldPath = req.file.path;
@@ -137,7 +132,6 @@ exports.image_increment_clicks = function(req, res) {
 				res.status(404).end("Image does not exist. Clicks not incremented: " + err);
 			}
 			else{
-				console.log("Image clicks are now: " + image.clicks);
 				res.status(200).end("Clicks incremented");
 			}
 		})
