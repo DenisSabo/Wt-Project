@@ -11,7 +11,7 @@ router.post("/", manage_images_controller.image_create_post, function(){
 router.delete("/:path", manage_images_controller.image_delete_delete);
 
 //increments 'clicks' in database for specific entry with :id
-router.put("/clicked/:id", manage_images_controller.image_increment_clicks);
+router.post("/clicked/:id", manage_images_controller.image_increment_clicks);
 
 
 module.exports = router;
