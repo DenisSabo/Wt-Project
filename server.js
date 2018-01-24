@@ -3,8 +3,6 @@ var express = require('express');
 var expressSession = require('express-session');
 var passport = require('passport');
 var config = require('config');
-const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 var mongoose = require('mongoose');
 var router = require('./router');
 
