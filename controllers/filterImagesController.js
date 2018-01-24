@@ -5,7 +5,14 @@ var User = require('../models/users.js');
 
 //Display image of all images, sorted by date (newest at first)
 exports.image_recent_list = function(req, res) {
-	res.send('NOT IMPLEMENTED: Recent images list');
+	Image.find({}, null, {sort: {uploadTime: -1}}, function(err, docs) {
+		if(err){
+			res.status(500).end();
+		}
+		else{
+			res.status(200).json(docs);
+		}
+	});
 };
 
 //Displays all images of one specific user/author
