@@ -4,7 +4,7 @@
 
 1. get [docker](https://www.docker.com/) <-- download available on their webside
 
-2. copy and rename the file **config/default.json.const** to **config/default.json** and enter your websettings or use the example config that is already in the folder
+2. copy and rename the file **config/default.json.const** to **config/default.json** and enter your websettings
 
 3. enter the following command in the project folder
     ```sh
