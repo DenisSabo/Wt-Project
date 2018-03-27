@@ -1,4 +1,4 @@
-## WT - Project
+## Webtechnology - Social Media Project
 
 #### Get Started (with docker container)
 
@@ -11,7 +11,7 @@
         $ docker-compose up
     ```
 
-#### Get Started (local)
+#### OR Get Started locally
 
 1. get [node.js](https://nodejs.org/en/) <-- click for more information on how to obtain it
 
@@ -35,3 +35,5 @@
     ```sh
         $ npm start
     ```
+    
+#### TODO Add Heroku for easy demonstration of the project
